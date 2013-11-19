@@ -5,16 +5,34 @@ import java.util.Random;
 import com.clean.ship.ShipLocations;
 
 public class ShipImplementation {
-
-	private TableWithShips table;
-    private ShipSetter shipMaker;
+	
     Random randomgenerator;
     private ShipLocations shipLocations;
-    static final int NUMBEROFTSHIPS = 3;
-    static final int NUMBEROFFOURSHIPS = 2;
-    static final int NUMBEROFTHREESHIPS = 3;
-    static final int NUMBEROFTWOSHIPS = 5;
-    static final int NUMBEROFONESHIPS = 1;
+
+
+	public ShipImplementation(int numberOfTShip, int numberOfFourShip,
+			int numberOfThreeShip, int numberOfTwoShip, int numberOfOneShip) {
+		super();
+		this.numberOfTShip = numberOfTShip;
+		this.numberOfFourShip = numberOfFourShip;
+		this.numberOfThreeShip = numberOfThreeShip;
+		this.numberOfTwoShip = numberOfTwoShip;
+		this.numberOfOneShip = numberOfOneShip;
+		if (numberOfFourShip < 0 || numberOfOneShip < 0 || numberOfThreeShip < 0 || numberOfTShip < 0 || numberOfTwoShip < 0|| 
+			numberOfFourShip > 5 || numberOfOneShip > 5 || numberOfThreeShip > 5 || numberOfTShip > 5 || numberOfTwoShip > 5) {
+			throw new IllegalArgumentException();
+		}
+	}
+
+	private final int numberOfTShip;
+	private final int numberOfFourShip;
+    private final int numberOfThreeShip;
+    private final int numberOfTwoShip;
+    private final int numberOfOneShip;
+    
+    public int getNumberOfTargets(){
+    	return numberOfTShip * 4 + numberOfFourShip * 4 + numberOfThreeShip * 3 + numberOfTwoShip * 2 + numberOfOneShip; 
+    }
 
     public void placeShips() {
         randomgenerator = new Random();
@@ -26,79 +44,67 @@ public class ShipImplementation {
     }
 
     private void placeTShips() {
-        for (int index = 0; index < NUMBEROFTSHIPS; index++) {
-            int randomInt = randomgenerator.nextInt(18 * 19);
-            if (table.checkTShip(randomInt % 18, randomInt / 19 + 1)) {
+        for (int index = 0; index < numberOfTShip; index++) {
+        	 int randomInt = randomgenerator.nextInt(18);
+        	 int randomInt2 = randomgenerator.nextInt(19);
+            if (shipLocations.checkTShip(randomInt, randomInt2)) {
             	index--;
             } else {
-	            shipMaker.makeShipWithAnUpsideDownTShape(randomInt % 18, randomInt / 19 + 1);
-	            shipLocations.addTShipLocation(randomInt);
+	            shipLocations.addTShipLocation(randomInt, randomInt2);
             }   
         }
     }
     
     private void placeFourShips() {
-    	for (int index = 0; index < NUMBEROFFOURSHIPS; index++) {
-	        int randomInt = randomgenerator.nextInt(17 * 20);
-            if (table.checkFourShip(randomInt % 17, randomInt / 17)) {
+    	for (int index = 0; index < numberOfFourShip; index++) {
+       	 int randomInt = randomgenerator.nextInt(17);
+       	 int randomInt2 = randomgenerator.nextInt(20);
+            if (shipLocations.checkFourShip(randomInt, randomInt2)) {
             	index--;
             } else {
-		        shipLocations.addFourShipLocation(randomInt);
-		        shipMaker.makeShipWithFourPoints(randomInt % 17, randomInt / 17);
+		        shipLocations.addFourShipLocation(randomInt, randomInt2);
             }
     	 }
     }
     
     private void placeThreeShips() {
-    	for (int index = 0; index < NUMBEROFTHREESHIPS; index++) {
-    		 int randomInt = randomgenerator.nextInt(18 * 20);
-             if (table.checkThreeShip(randomInt % 18, randomInt / 18)) {
+    	for (int index = 0; index < numberOfThreeShip; index++) {
+       	 int randomInt = randomgenerator.nextInt(18);
+       	 int randomInt2 = randomgenerator.nextInt(20);
+             if (shipLocations.checkThreeShip(randomInt, randomInt2)) {
              	index--;
              } else {
-	    		 shipLocations.addThreeShipLocation(randomInt);
-	    		 shipMaker.makeShipWithThreePoints(randomInt % 18, randomInt / 18);
+	    		 shipLocations.addThreeShipLocation(randomInt, randomInt2);
              }
     	 }
     }
 
     private void placeTwoShips() {
-    	for (int index = 0; index < NUMBEROFTWOSHIPS; index++) {
-    		int randomInt = randomgenerator.nextInt(19 * 20);
-            if (table.checkTwoShip(randomInt % 19, randomInt / 19)) {
+    	for (int index = 0; index < numberOfTwoShip; index++) {
+       	 int randomInt = randomgenerator.nextInt(19);
+       	 int randomInt2 = randomgenerator.nextInt(20);
+            if (shipLocations.checkTwoShip(randomInt, randomInt2)) {
              	index--;
              } else {
-	    		shipLocations.addTwoShipLocation(randomInt);
-	        	shipMaker.makeShipWithTwoPoints(randomInt % 19, randomInt / 19);
+	    		shipLocations.addTwoShipLocation(randomInt, randomInt2);
              }
     	 }
     }
     
     private void placeOneShips() {
-    	for (int index = 0; index < NUMBEROFONESHIPS; index++) {
-    		int randomInt = randomgenerator.nextInt(20 * 20);
-            if (table.getXY(randomInt % 20, randomInt / 20)) {
+    	for (int index = 0; index < numberOfOneShip; index++) {
+       	 int randomInt = randomgenerator.nextInt(20);
+       	 int randomInt2 = randomgenerator.nextInt(20);
+            if (shipLocations.checkOneShip(randomInt, randomInt2)) {
              	index--;
              } else {
-	    		shipLocations.addOneShipLocation(randomInt);
-	    		shipMaker.makeShipWithOnePoint(randomInt % 20, randomInt / 20);
+	    		shipLocations.addOneShipLocation(randomInt, randomInt2);
              }
     	}
     }
-    
-    public void setTableInShipSetter(TableWithShips table) {
-    	shipMaker.setTable(table);
-    }
-
-	public void setShipMaker(ShipSetter shipMaker) {
-		this.shipMaker = shipMaker;
-	}
 
 	public void setShipLocations(ShipLocations shipLocations) {
 		this.shipLocations = shipLocations;
-	}
-
-	public void setTable(TableWithShips table) {
-		this.table = table;
 	}
 
 }

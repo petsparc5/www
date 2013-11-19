@@ -22,7 +22,7 @@ public class ShipTest {
 		boolean actual = underTest.contains(0, 1);
 		boolean actual1 = underTest.contains(1, 1);
 		boolean actual2 = underTest.contains(2, 1);
-		boolean actual3 = underTest.contains(1, 0);
+		boolean actual3 = underTest.contains(1, 2);
 		//Then
 		Assert.assertEquals(true, actual);
 		Assert.assertEquals(true, actual1);
@@ -87,19 +87,19 @@ public class ShipTest {
 		//Given
 		underTest.addShipWithOnePoint(5, 5);
 		//When
-		underTest.hit(5, 5);
-		boolean actual = underTest.contains(5, 5);
+		boolean actual = underTest.hit(5, 5);
 		//Then
-		Assert.assertEquals(false, actual);
+		Assert.assertEquals(true, actual);
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Test
 	public void testHitWithBadArguments() {
 		//Given
 		underTest.addShipWithOnePoint(5, 5);
 		//When
-		underTest.hit(6, 6);
-		//Then It Throws An Illegal Argument Exception
+		boolean actual = underTest.hit(6, 6);
+		//Then
+		Assert.assertEquals(false, actual);
 	}
 	
 	@Test
@@ -122,6 +122,55 @@ public class ShipTest {
 		boolean actual = underTest.isSunken();
 		//Then
 		Assert.assertEquals(false, actual);
+	}
+	
+	@Test
+	public void testEquals() {
+		//Given
+		underTest.addShipWithTwoPoints(5, 5);
+		Ship ship = new Ship();
+		ship.addShipWithTwoPoints(5, 5);
+		//When
+		boolean actual = underTest.equals(ship);
+		//Then
+		Assert.assertEquals(true, actual);
+	}
+	
+	@Test
+	public void testNotEqualsWithLessElements() {
+		//Given
+		underTest.addShipWithTwoPoints(5, 5);
+		Ship ship = new Ship();
+		ship.addShipWithOnePoint(5, 5);
+		//When
+		boolean actual = underTest.equals(ship);
+		//Then
+		Assert.assertEquals(false, actual);
+	}
+	
+	@Test
+	public void testNotEqualsWithMoreElements() {
+		//Given
+		underTest.addShipWithTwoPoints(5, 5);
+		Ship ship = new Ship();
+		ship.addShipWithThreePoints(5, 5);
+		//When
+		boolean actual = underTest.equals(ship);
+		//Then
+		Assert.assertEquals(false, actual);
+	}
+	
+	@Test
+	public void testHashCode() {
+		//Given
+		underTest.addShipWithTwoPoints(5, 5);
+		Ship ship = new Ship();
+		ship.addShipWithTwoPoints(5, 5);
+		//When
+		int expected = ship.hashCode();
+		int actual = underTest.hashCode();
+		//Then
+		Assert.assertEquals(expected, actual);
 	}
 
 }

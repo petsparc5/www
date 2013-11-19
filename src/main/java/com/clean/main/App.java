@@ -3,21 +3,19 @@ package com.clean.main;
 import com.clean.ship.ShipLocations;
 import com.clean.shipgame.GameWithShips;
 import com.clean.tablewithships.ShipImplementation;
-import com.clean.tablewithships.ShipSetter;
-import com.clean.tablewithships.TableWithShips;
 
 public class App 
 {
     public static void main( String[] args ) {
-    	TableWithShips table = new TableWithShips();
+    	if (args.length != 5) {
+    		throw new IllegalArgumentException();
+    	}
     	ShipLocations shipLocations = new ShipLocations();
-        ShipImplementation impl = new ShipImplementation();
-    	ShipSetter shipMaker = new ShipSetter();
+        ShipImplementation impl = new ShipImplementation(Integer.parseInt(args[0]), Integer.parseInt(args[1]), 
+        							Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4]));
     	GameWithShips game = new GameWithShips();
     	game.setShipLocations(shipLocations);
-    	game.setTable(table);
     	game.setImpl(impl);
-		game.setShipMaker(shipMaker);
     	game.initialise();
     	game.play();
     }

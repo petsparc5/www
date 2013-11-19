@@ -6,51 +6,76 @@ import java.util.List;
 public class ShipLocations {
 	
 	private List<Ship> shipLocations = new ArrayList<Ship>();
-
 	
-	public void addTShipLocation(int location) {
+	public void addTShipLocation(int x, int y) {
 		Ship ship = new Ship();
-		ship.addShipWithAnUpsideDownTShape(location / 19 + 1, location % 18);
+		ship.addShipWithAnUpsideDownTShape(x, y);
 		shipLocations.add(ship);
 	}
-	public void addFourShipLocation(int location) {
+	public void addFourShipLocation(int x, int y) {
 		Ship ship = new Ship();
-		ship.addShipWithFourPoints(location / 17, location % 17);
+		ship.addShipWithFourPoints(x, y);
 		shipLocations.add(ship);
 	}
-	public void addThreeShipLocation(int location) {
+	public void addThreeShipLocation(int x, int y) {
 		Ship ship = new Ship();
-		ship.addShipWithThreePoints(location / 18, location % 18);
+		ship.addShipWithThreePoints(x, y);
 		shipLocations.add(ship);
 	}
-	public void addTwoShipLocation(int location) {
+	public void addTwoShipLocation(int x, int y) {
 		Ship ship = new Ship();
-		ship.addShipWithTwoPoints(location / 19, location % 19);
+		ship.addShipWithTwoPoints(x, y);
 		shipLocations.add(ship);
 	}
-	public void addOneShipLocation(int location) {
+	public void addOneShipLocation(int x, int y) {
 		Ship ship = new Ship();
-		ship.addShipWithOnePoint(location / 20, location % 20);
+		ship.addShipWithOnePoint(x, y);
 		shipLocations.add(ship);
 	}
 	
-	public void hit(int x, int y) {
+    public boolean checkTShip(int x, int y) {
+        return (checkPoint(x, y) || checkPoint(x+1, y) || checkPoint(x+2, y) || checkPoint(x+1, y+1));
+    }
+    public boolean checkFourShip(int x, int y) {
+        return (checkPoint(x, y) || checkPoint(x+1, y) || checkPoint(x+2, y) || checkPoint(x+3, y));
+    }
+    
+    public boolean checkThreeShip(int x, int y) {
+        return (checkPoint(x, y) || checkPoint(x+1, y) || checkPoint(x+2, y));
+    }
+    public boolean checkTwoShip(int x, int y) {
+        return (checkPoint(x, y) || checkPoint(x+1, y));
+    }
+    
+    public boolean checkOneShip(int x, int y) {
+        return (checkPoint(x, y));
+    }
+    
+    public boolean checkPoint(int x, int y) {
+    	boolean answer = false;
 		for (Ship ship : shipLocations) {
-			if (ship.contains(x, y)) {
-				ship.hit(x, y);
-			}
+			answer |= ship.contains(x, y);
 		}
+    	return answer;
+    }
+    
+	public boolean hit(int x, int y) {
+		boolean answer = false;
+		for (Ship ship : shipLocations) {
+				answer |= ship.hit(x, y);
+		}
+		return answer;
 	}
 	
 	public boolean checkSunken() {
 		boolean sunkenShipChecker = false;
-		for (Ship ship : shipLocations) {
+		for (int i = 0; i < shipLocations.size(); i++){
+			Ship ship = shipLocations.get(i);
 			if (ship.isSunken()) {
 				sunkenShipChecker = true;
+				shipLocations.remove(ship);
 			}
-			shipLocations.remove(ship);
 		}
 		return sunkenShipChecker;
 	}
-
 }

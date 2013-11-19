@@ -18,11 +18,11 @@ public class ShipLocationsTest {
 	public void testAddTShipLocation() {
 		//Given
 		//When
-		underTest.addTShipLocation(1);
-		boolean actual = underTest.contains(0, 1);
-		boolean actual1 = underTest.contains(1, 1);
-		boolean actual2 = underTest.contains(2, 1);
-		boolean actual3 = underTest.contains(1, 0);
+		underTest.addTShipLocation(0, 1);
+		boolean actual = underTest.checkPoint(0, 1);
+		boolean actual1 = underTest.checkPoint(1, 1);
+		boolean actual2 = underTest.checkPoint(2, 1);
+		boolean actual3 = underTest.checkPoint(1, 2);
 		//Then
 		Assert.assertEquals(true, actual);
 		Assert.assertEquals(true, actual1);
@@ -34,11 +34,11 @@ public class ShipLocationsTest {
 	public void testAddShipWithFourPoints() {
 		//Given
 		//When
-		underTest.addShipWithFourPoints(10, 6);
-		boolean actual = underTest.contains(10, 6);
-		boolean actual1 = underTest.contains(11, 6);
-		boolean actual2 = underTest.contains(12, 6);
-		boolean actual3 = underTest.contains(13, 6);
+		underTest.addFourShipLocation(10, 6);
+		boolean actual = underTest.checkPoint(10, 6);
+		boolean actual1 = underTest.checkPoint(11, 6);
+		boolean actual2 = underTest.checkPoint(12, 6);
+		boolean actual3 = underTest.checkPoint(13, 6);
 		//Then
 		Assert.assertEquals(true, actual);
 		Assert.assertEquals(true, actual1);
@@ -50,10 +50,10 @@ public class ShipLocationsTest {
 	public void testAddShipWithThreePoints() {
 		//Given
 		//When
-		underTest.addShipWithThreePoints(5, 1);
-		boolean actual = underTest.contains(5, 1);
-		boolean actual1 = underTest.contains(6, 1);
-		boolean actual2 = underTest.contains(7, 1);
+		underTest.addThreeShipLocation(5, 1);
+		boolean actual = underTest.checkPoint(5, 1);
+		boolean actual1 = underTest.checkPoint(6, 1);
+		boolean actual2 = underTest.checkPoint(7, 1);
 		//Then
 		Assert.assertEquals(true, actual);
 		Assert.assertEquals(true, actual1);
@@ -64,9 +64,9 @@ public class ShipLocationsTest {
 	public void testAddShipWithTwoPoints() {
 		//Given
 		//When
-		underTest.addShipWithTwoPoints(2, 13);
-		boolean actual = underTest.contains(2, 13);
-		boolean actual1 = underTest.contains(3, 13);
+		underTest.addTwoShipLocation(2, 13);
+		boolean actual = underTest.checkPoint(2, 13);
+		boolean actual1 = underTest.checkPoint(3, 13);
 		//Then
 		Assert.assertEquals(true, actual);
 		Assert.assertEquals(true, actual1);
@@ -76,50 +76,148 @@ public class ShipLocationsTest {
 	public void testAddShipWithOnePoint() {
 		//Given
 		//When
-		underTest.addShipWithOnePoint(19, 19);
-		boolean actual = underTest.contains(19, 19);
+		underTest.addOneShipLocation(19, 19);;
+		boolean actual = underTest.checkPoint(19, 19);
 		//Then
 		Assert.assertEquals(true, actual);
+	}
+	
+	@Test
+	public void testCheckTShip() {
+		//Given
+		underTest.addOneShipLocation(1, 2);
+		//When
+		boolean actual = underTest.checkTShip(1, 2);
+		//Then
+		Assert.assertEquals(true, actual);
+	}
+	
+	@Test
+	public void testCheckTShipWhenEmpty() {
+		//Given
+		//When
+		boolean actual = underTest.checkTShip(1, 2);
+		//Then
+		Assert.assertEquals(false, actual);
+	}
+	
+	@Test
+	public void testCheckFourShip() {
+		//Given
+		underTest.addOneShipLocation(1, 2);
+		//When
+		boolean actual = underTest.checkFourShip(1, 2);
+		//Then
+		Assert.assertEquals(true, actual);
+	}
+	
+	@Test
+	public void testCheckFourShipWhenEmpty() {
+		//Given
+		//When
+		boolean actual = underTest.checkFourShip(1, 2);
+		//Then
+		Assert.assertEquals(false, actual);
+	}
+	
+	@Test
+	public void testCheckThreeShip() {
+		//Given
+		underTest.addOneShipLocation(1, 2);
+		//When
+		boolean actual = underTest.checkThreeShip(1, 2);
+		//Then
+		Assert.assertEquals(true, actual);
+	}
+	
+	@Test
+	public void testCheckThreeShipWhenEmpty() {
+		//Given
+		//When
+		boolean actual = underTest.checkThreeShip(1, 2);
+		//Then
+		Assert.assertEquals(false, actual);
+	}
+	
+	@Test
+	public void testCheckTwoShip() {
+		//Given
+		underTest.addOneShipLocation(1, 2);
+		//When
+		boolean actual = underTest.checkTwoShip(1, 2);
+		//Then
+		Assert.assertEquals(true, actual);
+	}
+	
+	@Test
+	public void testCheckTwoShipWhenEmpty() {
+		//Given
+		//When
+		boolean actual = underTest.checkTwoShip(1, 2);
+		//Then
+		Assert.assertEquals(false, actual);
+	}
+	
+	@Test
+	public void testCheckOneShip() {
+		//Given
+		underTest.addOneShipLocation(2, 2);
+		//When
+		boolean actual = underTest.checkOneShip(2, 2);
+		//Then
+		Assert.assertEquals(true, actual);
+	}
+	
+	@Test
+	public void testCheckOneShipWhenEmpty() {
+		//Given
+		//When
+		boolean actual = underTest.checkOneShip(1, 2);
+		//Then
+		Assert.assertEquals(false, actual);
 	}
 	
 	@Test
 	public void testHit() {
 		//Given
-		underTest.addShipWithOnePoint(5, 5);
+		underTest.addTwoShipLocation(5, 5);
 		//When
-		underTest.hit(5, 5);
-		boolean actual = underTest.contains(5, 5);
-		//Then
-		Assert.assertEquals(false, actual);
-	}
-	
-	@Test(expected=IllegalArgumentException.class)
-	public void testHitWithBadArguments() {
-		//Given
-		underTest.addShipWithOnePoint(5, 5);
-		//When
-		underTest.hit(6, 6);
-		//Then It Throws An Illegal Argument Exception
-	}
-	
-	@Test
-	public void testIsSunken() {
-		//Given
-		underTest.addShipWithOnePoint(5, 5);
-		underTest.hit(5, 5);
-		//When
-		boolean actual = underTest.isSunken();
+		boolean actual = underTest.hit(5, 5);
 		//Then
 		Assert.assertEquals(true, actual);
 	}
 	
 	@Test
-	public void testIsSunkenWhenItIsNot() {
+	public void testHitWhenMisses() {
 		//Given
-		underTest.addShipWithTwoPoints(5, 5);
-		underTest.hit(5, 5);
+		underTest.addTwoShipLocation(5, 5);
 		//When
-		boolean actual = underTest.isSunken();
+		boolean actual = underTest.hit(6, 6);
+		//Then
+		Assert.assertEquals(false, actual);
+	}
+	
+	@Test
+	public void testCheckSunken() {
+		//Given
+		underTest.addThreeShipLocation(5, 5);
+		underTest.hit(5, 5);
+		underTest.hit(6, 5);
+		underTest.hit(7, 5);
+		//When
+		boolean actual = underTest.checkSunken();
+		//Then
+		Assert.assertEquals(true, actual);
+	}
+	
+	@Test
+	public void testCheckSunkenWhenItIsNot() {
+		//Given
+		underTest.addFourShipLocation(5, 5);
+		underTest.hit(5, 5);
+		underTest.hit(5, 6);
+		//When
+		boolean actual = underTest.checkSunken();
 		//Then
 		Assert.assertEquals(false, actual);
 	}

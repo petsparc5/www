@@ -22,6 +22,13 @@ public class PointTest {
 	}
 	
 	@Test
+	public void testEqualsOtherWay() {
+		Point point = new Point(3, 4);
+		boolean actual = point.equals(underTest);
+		Assert.assertEquals(true, actual);
+	}
+	
+	@Test
 	public void testEqualsGivenWrongPoint() {
 		Point point = new Point(1, 4);
 		boolean actual = underTest.equals(point);
