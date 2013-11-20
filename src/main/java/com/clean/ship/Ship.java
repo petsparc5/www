@@ -7,38 +7,15 @@ public class Ship {
 	
 	private List<Point> ship;
 	
-	public void addShipWithAnUpsideDownTShape(int x, int y) {
+	public void createShip(int x, int y, String[][] shape) {
 		ship = new ArrayList<Point>();
-        ship.add(new Point(x , y));
-        ship.add(new Point(x + 1, y));
-        ship.add(new Point(x + 2, y));
-        ship.add(new Point(x + 1, y + 1));
-    }
-
-    public void addShipWithFourPoints(int x, int y) {
-    	ship = new ArrayList<Point>();
-        ship.add(new Point(x , y));
-        ship.add(new Point(x + 1, y));
-        ship.add(new Point(x + 2, y));
-        ship.add(new Point(x + 3, y));
-    }
-
-    public void addShipWithThreePoints(int x, int y) {
-    	ship = new ArrayList<Point>();
-        ship.add(new Point(x , y));
-        ship.add(new Point(x + 1, y));
-        ship.add(new Point(x + 2, y));
-    }
-
-    public void addShipWithTwoPoints(int x, int y) {
-    	ship = new ArrayList<Point>();
-        ship.add(new Point(x , y));
-        ship.add(new Point(x + 1, y));
-    }
-
-    public void addShipWithOnePoint(int x, int y) {
-    	ship = new ArrayList<Point>();
-        ship.add(new Point(x , y));
+		for (int i = 0; i < shape.length; i++) {
+			for (int j = 0; j < shape[i].length; j++) {
+				if (shape[i][j].contains("X")){
+					ship.add(new Point(x + i, y + j));
+				}
+			}
+		}
     }
     
     public boolean contains (int x, int y) {

@@ -1,6 +1,7 @@
 package com.clean.shipgame;
 
 import com.clean.interfaces.Torpedo;
+import com.clean.ship.ShipFileReader;
 import com.clean.ship.ShipLocations;
 import com.clean.tablewithships.ShipImplementation;
 
@@ -8,12 +9,24 @@ public class GameWithShips implements Torpedo {
 	
 	private ShipLocations shipLocations;
     private ShipImplementation impl;
-	private int winCondition;
-	private int counter;
-	private ConsolePrinter consolePrinter;
+	private int winCondition = 0;
+	private int numberOfTargets;
+	private int boardSize;
+	private String filename;
+	private ShipFileReader shipFileReader;
 	
-    public boolean fire(int x, int y) {
-    	return shipLocations.hit(x, y);
+    public Status fire(int x, int y) {
+        Status status = Status.MISS;
+        if(shipLocations.hit(x, y)){
+            status = Status.HIT;
+            if(checkIfSunken()){
+                status = Status.SUNK;
+                if(++winCondition == numberOfTargets){
+                    status = Status.WIN;
+                }
+            }
+        }
+    	return status;
     }
     
     public boolean checkIfSunken() {
@@ -21,28 +34,13 @@ public class GameWithShips implements Torpedo {
     }
     
     public void initialise() {
+    	impl.setReader(shipFileReader);
+    	impl.setFilename(filename);
     	impl.setShipLocations(shipLocations);
+    	impl.setBoardSize(boardSize);
     	impl.placeShips();
-    	consolePrinter = new ConsolePrinter(shipLocations);
+    	numberOfTargets = impl.getTotalNumberOfTargets();
     }
-
-	public void play() {
-		winCondition = 0;
-		counter = 0;
-		int numberOfTargets = impl.getNumberOfTargets();
-		consolePrinter.printBoard();
-		while (winCondition != numberOfTargets) {
-			if (fire(counter % 20, counter/20)) {
-				winCondition++;
-				if (checkIfSunken()){
-					System.out.format("Ship Sunken at %d, %d %n", counter%20, counter/20);
-					consolePrinter.printBoard();
-				}
-			}
-			counter++;
-		}
-		System.out.format("Fired %d times %n", counter);
-	}
 
 	public void setShipLocations(ShipLocations shipLocations) {
 		this.shipLocations = shipLocations;
@@ -52,5 +50,17 @@ public class GameWithShips implements Torpedo {
 		this.impl = impl;
 	}
 
+	public void setBoardSize(int boardSize) {
+		this.boardSize = boardSize;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+
+	public void setShipFileReader(ShipFileReader shipFileReader) {
+		this.shipFileReader = shipFileReader;
+		
+	}
 
 }

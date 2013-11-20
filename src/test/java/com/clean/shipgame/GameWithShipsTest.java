@@ -31,6 +31,7 @@ public class GameWithShipsTest {
 		EasyMock.expectLastCall();
 		impl.placeShips();
 		EasyMock.expectLastCall();
+		EasyMock.expect(impl.getTotalNumberOfTargets()).andReturn(50);
 		EasyMock.replay(impl);
 		//WHEN
 		underTest.initialise();
@@ -39,27 +40,46 @@ public class GameWithShipsTest {
 	}
 	
 	@Test
-	public void testFire() {
+	public void testFireAndSunk() {
 		//GIVEN
 		EasyMock.expect(shipLocations.hit(3, 4)).andReturn(true);
+		EasyMock.expect(shipLocations.checkSunken()).andReturn(true);
 		EasyMock.replay(shipLocations);
+		Status expected = Status.SUNK;
+		
 		//WHEN
-		boolean actual = underTest.fire(3, 4);
+		Status actual = underTest.fire(3, 4);
 		//THEN
 		EasyMock.verify(shipLocations);
-		Assert.assertEquals(true, actual);
+		Assert.assertEquals(expected , actual);
 	}
 	
 	@Test
-	public void testFireAndReturnFalse() {
+	public void testFireAndHit() {
+		//GIVEN
+		EasyMock.expect(shipLocations.hit(3, 4)).andReturn(true);
+		EasyMock.expect(shipLocations.checkSunken()).andReturn(false);
+		EasyMock.replay(shipLocations);
+		Status expected = Status.HIT;
+		
+		//WHEN
+		Status actual = underTest.fire(3, 4);
+		//THEN
+		EasyMock.verify(shipLocations);
+		Assert.assertEquals(expected , actual);
+	}
+	
+	@Test
+	public void testFireAndMiss() {
 		//GIVEN
 		EasyMock.expect(shipLocations.hit(2, 1)).andReturn(false);
 		EasyMock.replay(shipLocations);
+		Status expected = Status.MISS;
 		//WHEN
-		boolean actual = underTest.fire(2, 1);
+		Status actual = underTest.fire(2, 1);
 		//THEN
 		EasyMock.verify(shipLocations);
-		Assert.assertEquals(false, actual);
+		Assert.assertEquals(expected, actual);
 	}
 	
 	@Test
@@ -84,17 +104,5 @@ public class GameWithShipsTest {
 		//THEN
 		EasyMock.verify(shipLocations);
 		Assert.assertEquals(true, actual);
-	}
-	
-	@Test
-	public void testPlay() {
-		//GIVEN
-		EasyMock.expect(shipLocations.hit(EasyMock.anyInt(), EasyMock.anyInt())).andStubReturn(true);
-		EasyMock.expect(shipLocations.checkSunken()).andStubReturn(false);
-		EasyMock.replay(shipLocations);
-		//WHEN
-		underTest.play();
-		//THEN
-		EasyMock.verify(shipLocations);
 	}
 }

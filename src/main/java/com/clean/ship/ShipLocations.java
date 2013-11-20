@@ -7,48 +7,22 @@ public class ShipLocations {
 	
 	private List<Ship> shipLocations = new ArrayList<Ship>();
 	
-	public void addTShipLocation(int x, int y) {
+	public void addShipLocation(int x, int y, String[][] shape) {
 		Ship ship = new Ship();
-		ship.addShipWithAnUpsideDownTShape(x, y);
-		shipLocations.add(ship);
-	}
-	public void addFourShipLocation(int x, int y) {
-		Ship ship = new Ship();
-		ship.addShipWithFourPoints(x, y);
-		shipLocations.add(ship);
-	}
-	public void addThreeShipLocation(int x, int y) {
-		Ship ship = new Ship();
-		ship.addShipWithThreePoints(x, y);
-		shipLocations.add(ship);
-	}
-	public void addTwoShipLocation(int x, int y) {
-		Ship ship = new Ship();
-		ship.addShipWithTwoPoints(x, y);
-		shipLocations.add(ship);
-	}
-	public void addOneShipLocation(int x, int y) {
-		Ship ship = new Ship();
-		ship.addShipWithOnePoint(x, y);
+		ship.createShip(x, y, shape);
 		shipLocations.add(ship);
 	}
 	
-    public boolean checkTShip(int x, int y) {
-        return (checkPoint(x, y) || checkPoint(x+1, y) || checkPoint(x+2, y) || checkPoint(x+1, y+1));
-    }
-    public boolean checkFourShip(int x, int y) {
-        return (checkPoint(x, y) || checkPoint(x+1, y) || checkPoint(x+2, y) || checkPoint(x+3, y));
-    }
-    
-    public boolean checkThreeShip(int x, int y) {
-        return (checkPoint(x, y) || checkPoint(x+1, y) || checkPoint(x+2, y));
-    }
-    public boolean checkTwoShip(int x, int y) {
-        return (checkPoint(x, y) || checkPoint(x+1, y));
-    }
-    
-    public boolean checkOneShip(int x, int y) {
-        return (checkPoint(x, y));
+    public boolean checkShip(int x, int y, String[][] shape) {
+    	boolean answer = false;
+    	for (int i = 0; i < shape.length; i++) {
+			for (int j = 0; j < shape[i].length; j++) {
+				if (shape[i][j].contains("X")){
+					answer |= checkPoint(x, y);
+				}
+			}
+		}
+        return answer;
     }
     
     public boolean checkPoint(int x, int y) {

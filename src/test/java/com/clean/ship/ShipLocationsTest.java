@@ -8,171 +8,39 @@ import org.junit.Test;
 public class ShipLocationsTest {
 	
 	ShipLocations underTest;
+	private String[][] shape;
 	
 	@Before
 	public void setUp() {
 		underTest = new ShipLocations();
+		setUpShape1();
 	}
 	
 	@Test
-	public void testAddTShipLocation() {
+	public void testAddShipLocation() {
 		//Given
 		//When
-		underTest.addTShipLocation(0, 1);
-		boolean actual = underTest.checkPoint(0, 1);
-		boolean actual1 = underTest.checkPoint(1, 1);
-		boolean actual2 = underTest.checkPoint(2, 1);
-		boolean actual3 = underTest.checkPoint(1, 2);
-		//Then
-		Assert.assertEquals(true, actual);
-		Assert.assertEquals(true, actual1);
-		Assert.assertEquals(true, actual2);
-		Assert.assertEquals(true, actual3);
-	}
-	
-	@Test
-	public void testAddShipWithFourPoints() {
-		//Given
-		//When
-		underTest.addFourShipLocation(10, 6);
-		boolean actual = underTest.checkPoint(10, 6);
-		boolean actual1 = underTest.checkPoint(11, 6);
-		boolean actual2 = underTest.checkPoint(12, 6);
-		boolean actual3 = underTest.checkPoint(13, 6);
-		//Then
-		Assert.assertEquals(true, actual);
-		Assert.assertEquals(true, actual1);
-		Assert.assertEquals(true, actual2);
-		Assert.assertEquals(true, actual3);
-	}
-	
-	@Test
-	public void testAddShipWithThreePoints() {
-		//Given
-		//When
-		underTest.addThreeShipLocation(5, 1);
-		boolean actual = underTest.checkPoint(5, 1);
-		boolean actual1 = underTest.checkPoint(6, 1);
-		boolean actual2 = underTest.checkPoint(7, 1);
-		//Then
-		Assert.assertEquals(true, actual);
-		Assert.assertEquals(true, actual1);
-		Assert.assertEquals(true, actual2);
-	}
-	
-	@Test
-	public void testAddShipWithTwoPoints() {
-		//Given
-		//When
-		underTest.addTwoShipLocation(2, 13);
-		boolean actual = underTest.checkPoint(2, 13);
-		boolean actual1 = underTest.checkPoint(3, 13);
-		//Then
-		Assert.assertEquals(true, actual);
-		Assert.assertEquals(true, actual1);
-	}
-	
-	@Test
-	public void testAddShipWithOnePoint() {
-		//Given
-		//When
-		underTest.addOneShipLocation(19, 19);;
+		underTest.addShipLocation(19, 19, shape);
 		boolean actual = underTest.checkPoint(19, 19);
 		//Then
 		Assert.assertEquals(true, actual);
 	}
 	
 	@Test
-	public void testCheckTShip() {
+	public void testCheckShip() {
 		//Given
-		underTest.addOneShipLocation(1, 2);
+		underTest.addShipLocation(1, 2, shape);
 		//When
-		boolean actual = underTest.checkTShip(1, 2);
+		boolean actual = underTest.checkShip(1, 2, shape);
 		//Then
 		Assert.assertEquals(true, actual);
 	}
 	
 	@Test
-	public void testCheckTShipWhenEmpty() {
+	public void testCheckShipWhenEmpty() {
 		//Given
 		//When
-		boolean actual = underTest.checkTShip(1, 2);
-		//Then
-		Assert.assertEquals(false, actual);
-	}
-	
-	@Test
-	public void testCheckFourShip() {
-		//Given
-		underTest.addOneShipLocation(1, 2);
-		//When
-		boolean actual = underTest.checkFourShip(1, 2);
-		//Then
-		Assert.assertEquals(true, actual);
-	}
-	
-	@Test
-	public void testCheckFourShipWhenEmpty() {
-		//Given
-		//When
-		boolean actual = underTest.checkFourShip(1, 2);
-		//Then
-		Assert.assertEquals(false, actual);
-	}
-	
-	@Test
-	public void testCheckThreeShip() {
-		//Given
-		underTest.addOneShipLocation(1, 2);
-		//When
-		boolean actual = underTest.checkThreeShip(1, 2);
-		//Then
-		Assert.assertEquals(true, actual);
-	}
-	
-	@Test
-	public void testCheckThreeShipWhenEmpty() {
-		//Given
-		//When
-		boolean actual = underTest.checkThreeShip(1, 2);
-		//Then
-		Assert.assertEquals(false, actual);
-	}
-	
-	@Test
-	public void testCheckTwoShip() {
-		//Given
-		underTest.addOneShipLocation(1, 2);
-		//When
-		boolean actual = underTest.checkTwoShip(1, 2);
-		//Then
-		Assert.assertEquals(true, actual);
-	}
-	
-	@Test
-	public void testCheckTwoShipWhenEmpty() {
-		//Given
-		//When
-		boolean actual = underTest.checkTwoShip(1, 2);
-		//Then
-		Assert.assertEquals(false, actual);
-	}
-	
-	@Test
-	public void testCheckOneShip() {
-		//Given
-		underTest.addOneShipLocation(2, 2);
-		//When
-		boolean actual = underTest.checkOneShip(2, 2);
-		//Then
-		Assert.assertEquals(true, actual);
-	}
-	
-	@Test
-	public void testCheckOneShipWhenEmpty() {
-		//Given
-		//When
-		boolean actual = underTest.checkOneShip(1, 2);
+		boolean actual = underTest.checkShip(1, 2, shape);
 		//Then
 		Assert.assertEquals(false, actual);
 	}
@@ -180,7 +48,7 @@ public class ShipLocationsTest {
 	@Test
 	public void testHit() {
 		//Given
-		underTest.addTwoShipLocation(5, 5);
+		underTest.addShipLocation(5, 5, shape);
 		//When
 		boolean actual = underTest.hit(5, 5);
 		//Then
@@ -190,7 +58,7 @@ public class ShipLocationsTest {
 	@Test
 	public void testHitWhenMisses() {
 		//Given
-		underTest.addTwoShipLocation(5, 5);
+		underTest.addShipLocation(5, 5, shape);
 		//When
 		boolean actual = underTest.hit(6, 6);
 		//Then
@@ -200,10 +68,9 @@ public class ShipLocationsTest {
 	@Test
 	public void testCheckSunken() {
 		//Given
-		underTest.addThreeShipLocation(5, 5);
+		underTest.addShipLocation(5, 5, shape);
 		underTest.hit(5, 5);
-		underTest.hit(6, 5);
-		underTest.hit(7, 5);
+		underTest.hit(5, 6);
 		//When
 		boolean actual = underTest.checkSunken();
 		//Then
@@ -213,13 +80,40 @@ public class ShipLocationsTest {
 	@Test
 	public void testCheckSunkenWhenItIsNot() {
 		//Given
-		underTest.addFourShipLocation(5, 5);
+		underTest.addShipLocation(5, 5, shape);
 		underTest.hit(5, 5);
-		underTest.hit(5, 6);
 		//When
 		boolean actual = underTest.checkSunken();
 		//Then
 		Assert.assertEquals(false, actual);
+	}
+	
+	public void setUpShape1() {
+		String[] row1 = new String[4];
+		row1[0] = "X";
+		row1[1] = "X";
+		row1[2] = "O";
+		row1[3] = "O";
+		String[] row2 = new String[4];
+		row2[0] = "O";
+		row2[1] = "O";
+		row2[2] = "O";
+		row2[3] = "O";
+		String[] row3 = new String[4];
+		row3[0] = "O";
+		row3[1] = "O";
+		row3[2] = "O";
+		row3[3] = "O";
+		String[] row4 = new String[4];
+		row4[0] = "O";
+		row4[1] = "O";
+		row4[2] = "O";
+		row4[3] = "O";
+		shape = new String[4][4];
+		shape[0] = row1;
+		shape[1] = row2;
+		shape[2] = row3;
+		shape[3] = row4;
 	}
 
 }

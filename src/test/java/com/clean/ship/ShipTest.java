@@ -8,84 +8,32 @@ import org.junit.Test;
 public class ShipTest {
 	
 	Ship underTest;
+	String[][] shape;
+	String[][] shape2;
+	String[][] shape3;
 	
 	@Before
 	public void setUp() {
 		underTest = new Ship();
-	}
-	
-	@Test
-	public void testAddShipWithAnUpsideDownTShape() {
-		//Given
-		//When
-		underTest.addShipWithAnUpsideDownTShape(0, 1);
-		boolean actual = underTest.contains(0, 1);
-		boolean actual1 = underTest.contains(1, 1);
-		boolean actual2 = underTest.contains(2, 1);
-		boolean actual3 = underTest.contains(1, 2);
-		//Then
-		Assert.assertEquals(true, actual);
-		Assert.assertEquals(true, actual1);
-		Assert.assertEquals(true, actual2);
-		Assert.assertEquals(true, actual3);
-	}
-	
-	@Test
-	public void testAddShipWithFourPoints() {
-		//Given
-		//When
-		underTest.addShipWithFourPoints(10, 6);
-		boolean actual = underTest.contains(10, 6);
-		boolean actual1 = underTest.contains(11, 6);
-		boolean actual2 = underTest.contains(12, 6);
-		boolean actual3 = underTest.contains(13, 6);
-		//Then
-		Assert.assertEquals(true, actual);
-		Assert.assertEquals(true, actual1);
-		Assert.assertEquals(true, actual2);
-		Assert.assertEquals(true, actual3);
-	}
-	
-	@Test
-	public void testAddShipWithThreePoints() {
-		//Given
-		//When
-		underTest.addShipWithThreePoints(5, 1);
-		boolean actual = underTest.contains(5, 1);
-		boolean actual1 = underTest.contains(6, 1);
-		boolean actual2 = underTest.contains(7, 1);
-		//Then
-		Assert.assertEquals(true, actual);
-		Assert.assertEquals(true, actual1);
-		Assert.assertEquals(true, actual2);
-	}
-	
-	@Test
-	public void testAddShipWithTwoPoints() {
-		//Given
-		//When
-		underTest.addShipWithTwoPoints(2, 13);
-		boolean actual = underTest.contains(2, 13);
-		boolean actual1 = underTest.contains(3, 13);
-		//Then
-		Assert.assertEquals(true, actual);
-		Assert.assertEquals(true, actual1);
+		setUpShape1();
 	}
 	
 	@Test
 	public void testAddShipWithOnePoint() {
 		//Given
 		//When
-		underTest.addShipWithOnePoint(19, 19);
+		underTest.createShip(19, 19, shape);
 		boolean actual = underTest.contains(19, 19);
+		boolean actual1 = underTest.contains(19, 20);
 		//Then
 		Assert.assertEquals(true, actual);
+		Assert.assertEquals(true, actual1);
 	}
 	
 	@Test
 	public void testHit() {
 		//Given
-		underTest.addShipWithOnePoint(5, 5);
+		underTest.createShip(5, 5, shape);
 		//When
 		boolean actual = underTest.hit(5, 5);
 		//Then
@@ -95,7 +43,7 @@ public class ShipTest {
 	@Test
 	public void testHitWithBadArguments() {
 		//Given
-		underTest.addShipWithOnePoint(5, 5);
+		underTest.createShip(5, 5, shape);
 		//When
 		boolean actual = underTest.hit(6, 6);
 		//Then
@@ -105,8 +53,9 @@ public class ShipTest {
 	@Test
 	public void testIsSunken() {
 		//Given
-		underTest.addShipWithOnePoint(5, 5);
+		underTest.createShip(5, 5, shape);
 		underTest.hit(5, 5);
+		underTest.hit(5, 6);
 		//When
 		boolean actual = underTest.isSunken();
 		//Then
@@ -116,7 +65,7 @@ public class ShipTest {
 	@Test
 	public void testIsSunkenWhenItIsNot() {
 		//Given
-		underTest.addShipWithTwoPoints(5, 5);
+		underTest.createShip(5, 5, shape);
 		underTest.hit(5, 5);
 		//When
 		boolean actual = underTest.isSunken();
@@ -127,9 +76,9 @@ public class ShipTest {
 	@Test
 	public void testEquals() {
 		//Given
-		underTest.addShipWithTwoPoints(5, 5);
+		underTest.createShip(5, 5, shape);
 		Ship ship = new Ship();
-		ship.addShipWithTwoPoints(5, 5);
+		ship.createShip(5, 5, shape);
 		//When
 		boolean actual = underTest.equals(ship);
 		//Then
@@ -139,9 +88,10 @@ public class ShipTest {
 	@Test
 	public void testNotEqualsWithLessElements() {
 		//Given
-		underTest.addShipWithTwoPoints(5, 5);
+		underTest.createShip(5, 5, shape);
 		Ship ship = new Ship();
-		ship.addShipWithOnePoint(5, 5);
+		setUpShape3();
+		ship.createShip(5, 5, shape3);
 		//When
 		boolean actual = underTest.equals(ship);
 		//Then
@@ -151,9 +101,10 @@ public class ShipTest {
 	@Test
 	public void testNotEqualsWithMoreElements() {
 		//Given
-		underTest.addShipWithTwoPoints(5, 5);
+		underTest.createShip(5, 5, shape);
 		Ship ship = new Ship();
-		ship.addShipWithThreePoints(5, 5);
+		setUpShape2();
+		ship.createShip(5, 5, shape2);
 		//When
 		boolean actual = underTest.equals(ship);
 		//Then
@@ -163,14 +114,98 @@ public class ShipTest {
 	@Test
 	public void testHashCode() {
 		//Given
-		underTest.addShipWithTwoPoints(5, 5);
+		underTest.createShip(5, 5, shape);
 		Ship ship = new Ship();
-		ship.addShipWithTwoPoints(5, 5);
+		ship.createShip(5, 5, shape);
 		//When
 		int expected = ship.hashCode();
 		int actual = underTest.hashCode();
 		//Then
 		Assert.assertEquals(expected, actual);
+	}
+	
+	public void setUpShape1() {
+		String[] row1 = new String[4];
+		row1[0] = "X";
+		row1[1] = "X";
+		row1[2] = "O";
+		row1[3] = "O";
+		String[] row2 = new String[4];
+		row2[0] = "O";
+		row2[1] = "O";
+		row2[2] = "O";
+		row2[3] = "O";
+		String[] row3 = new String[4];
+		row3[0] = "O";
+		row3[1] = "O";
+		row3[2] = "O";
+		row3[3] = "O";
+		String[] row4 = new String[4];
+		row4[0] = "O";
+		row4[1] = "O";
+		row4[2] = "O";
+		row4[3] = "O";
+		shape = new String[4][4];
+		shape[0] = row1;
+		shape[1] = row2;
+		shape[2] = row3;
+		shape[3] = row4;
+	}
+	
+	public void setUpShape2() {
+		String[] row1 = new String[4];
+		row1[0] = "X";
+		row1[1] = "X";
+		row1[2] = "X";
+		row1[3] = "O";
+		String[] row2 = new String[4];
+		row2[0] = "O";
+		row2[1] = "O";
+		row2[2] = "O";
+		row2[3] = "O";
+		String[] row3 = new String[4];
+		row3[0] = "O";
+		row3[1] = "O";
+		row3[2] = "O";
+		row3[3] = "O";
+		String[] row4 = new String[4];
+		row4[0] = "O";
+		row4[1] = "O";
+		row4[2] = "O";
+		row4[3] = "O";
+		shape2 = new String[4][4];
+		shape2[0] = row1;
+		shape2[1] = row2;
+		shape2[2] = row3;
+		shape2[3] = row4;
+	}
+	
+	public void setUpShape3() {
+		String[] row1 = new String[4];
+		row1[0] = "X";
+		row1[1] = "O";
+		row1[2] = "O";
+		row1[3] = "O";
+		String[] row2 = new String[4];
+		row2[0] = "O";
+		row2[1] = "O";
+		row2[2] = "O";
+		row2[3] = "O";
+		String[] row3 = new String[4];
+		row3[0] = "O";
+		row3[1] = "O";
+		row3[2] = "O";
+		row3[3] = "O";
+		String[] row4 = new String[4];
+		row4[0] = "O";
+		row4[1] = "O";
+		row4[2] = "O";
+		row4[3] = "O";
+		shape3 = new String[4][4];
+		shape3[0] = row1;
+		shape3[1] = row2;
+		shape3[2] = row3;
+		shape3[3] = row4;
 	}
 
 }
