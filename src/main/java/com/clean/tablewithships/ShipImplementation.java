@@ -27,16 +27,13 @@ public class ShipImplementation {
 				}
 			}
 		}
-		System.out.format("totalNumberOfTargets=%d %n", totalNumberOfTargets);
-		System.out.format("boardSize=%d %n", boardSize);
 	}
 	
 	public void initialisation() {
 		reader.setFilename(filename);
 		reader.read();
 		ships = reader.getShips();
-		numberOfShips = reader.getNumberOfShips();
-		calculateNumberOfTargets();		
+		numberOfShips = reader.getNumberOfShips();	
 	}
 
     public void placeShips() {
@@ -45,8 +42,8 @@ public class ShipImplementation {
     		for (int indexForHowManyTimesWeNeedToPlaceAShip = 0; indexForHowManyTimesWeNeedToPlaceAShip < numberOfShips.get(index); 
     				indexForHowManyTimesWeNeedToPlaceAShip++) {
 				String[][] shipShape = ships.get(index);
-	       	 	int randomInt = randomgenerator.nextInt(boardSize);
-	       	 	int randomInt2 = randomgenerator.nextInt(boardSize);
+	       	 	int randomInt = randomgenerator.nextInt(boardSize-4);
+	       	 	int randomInt2 = randomgenerator.nextInt(boardSize-4);
 	       	 	if (shipLocations.checkShip(randomInt, randomInt2, shipShape)){
 	       	 	indexForHowManyTimesWeNeedToPlaceAShip--;
 	       	 	} else {
@@ -69,6 +66,7 @@ public class ShipImplementation {
 	}
 
 	public int getTotalNumberOfTargets() {
+		calculateNumberOfTargets();
 		return totalNumberOfTargets;
 	}
 

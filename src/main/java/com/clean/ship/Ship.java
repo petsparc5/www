@@ -34,7 +34,8 @@ public class Ship {
     public boolean hit(int x, int y) {
     	boolean hitResult = false;
     	Point deletePoint = new Point(x, y);
-    	if(ship.remove(deletePoint)) {
+    	if(ship.contains(deletePoint)){
+    		ship.remove(deletePoint);
     		hitResult = true;
     	}
     	return hitResult;

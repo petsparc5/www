@@ -23,9 +23,10 @@ public class ConsolePrinter {
 		}
 		System.out.format("Table:%n%s%n", stringBuilder.toString());
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(1000);
 		} catch (InterruptedException e) {
-			System.out.println("Well, this should not happen! If you managed to get this message, please contact me! I'm your new lover.");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 

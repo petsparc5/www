@@ -23,10 +23,11 @@ public class ShipFileReader {
 		return answer;
 	}
 
-	public void read () {
+	public void read() {
 		BufferedReader reader = null;
 		try {
 			reader = new BufferedReader(new FileReader(new File(filename)));
+			System.out.format("filename=%s %n", filename);
 		} catch (IOException e) {
 			System.out.println("Could not locate your file");
 		}

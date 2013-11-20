@@ -20,28 +20,40 @@ public class TorpedoClient {
         portNumber = Integer.parseInt(string.split(":")[1]);
     }
 
-    public void initClient(GameWithShips gameWithShips, GameStrategy gameStrategy){
+    public void initClient(GameWithShips gameWithShips, GameStrategy gameStrategy, String boardSize){
         try (
             Socket clientSocket = new Socket(hostName, portNumber);
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
           ) {
+        	gameWithShips.initialise();
             String fromServer;
             String fromUser;
             TorpedoProtocol torpedoProtocol = new TorpedoProtocol(gameWithShips);
+            out.println("greeting "+boardSize);
             out.println(gameStrategy.firstTarget());
             while ((fromServer = in.readLine()) != null) {
-                if (fromServer.toLowerCase().equals("win")){
+                if (fromServer.toLowerCase().contains("win")){
+                	System.out.format("Peter=%s %n", gameStrategy.getPeter());
                     System.out.format("Win!%n");
                     break;
                 }
-                fromUser = torpedoProtocol.processInput(fromServer);
-                out.println(fromUser);
-                if(fromUser.equals("win")){
-                    System.out.format("Defeat!%n");
-                    break;
-                }
-                out.println(gameStrategy.nextTarget(fromServer));
+            	if(fromServer.toLowerCase().contains("fire") || fromServer.toLowerCase().contains("hit") ||
+            	   fromServer.toLowerCase().contains("miss") || fromServer.toLowerCase().contains("sunk")){
+            		fromUser = torpedoProtocol.processInput(fromServer);
+	                if(fromServer.toLowerCase().contains("fire") && !fromUser.contains("init")){
+	                	out.println(fromUser);
+			            fromUser = gameStrategy.nextTarget(fromServer);
+			            System.out.format("fromUser=%s %n",	fromUser);
+			            out.println(fromUser);
+	                }
+	                if(fromUser.toLowerCase().equals("win")){
+			            out.println(fromUser);
+			            System.out.format("Defeat!%n");
+	                    break;
+	                }
+
+            	}
             }
         } catch (UnknownHostException e) {
             System.err.println("Don't know about host " + hostName);

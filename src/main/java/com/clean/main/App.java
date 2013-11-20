@@ -30,7 +30,7 @@ public class App
             game.setBoardSize(Integer.parseInt(args[2]));
             GameStrategy gameStrategy = new FirePositionStrategy(Integer.parseInt(args[2]));
             gameStrategy.initialise();
-            torpedoClient.initClient(game, gameStrategy);
+            torpedoClient.initClient(game, gameStrategy, args[2]);
     	} else {
             TorpedoServer torpedoServer = new TorpedoServer(args[1]);
             torpedoServer.initServer(game);

@@ -18,7 +18,7 @@ public class ShipLocations {
     	for (int i = 0; i < shape.length; i++) {
 			for (int j = 0; j < shape[i].length; j++) {
 				if (shape[i][j].contains("X")){
-					answer |= checkPoint(x, y);
+					answer |= checkPoint(x + i, y + j);
 				}
 			}
 		}
@@ -47,7 +47,7 @@ public class ShipLocations {
 			Ship ship = shipLocations.get(i);
 			if (ship.isSunken()) {
 				sunkenShipChecker = true;
-				shipLocations.remove(ship);
+				shipLocations.remove(i);
 			}
 		}
 		return sunkenShipChecker;

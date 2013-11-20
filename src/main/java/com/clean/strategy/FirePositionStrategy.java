@@ -22,6 +22,11 @@ public class FirePositionStrategy implements GameStrategy {
 	private int[] guessy;
 	private int counter;
 	private List<Integer> hits = new ArrayList<>();
+	private int peter = 0;
+/*	private int tempx = -1;
+	private int tempy = -1;
+
+	private boolean tempcheck = false;*/
 	
 	private String converter(int x, int y) {
 		return "fire " + String.valueOf(x) + " " +String.valueOf(y);
@@ -51,7 +56,7 @@ public class FirePositionStrategy implements GameStrategy {
 		int middle = (boardSize-1) /2;
 		int x;
 		int y;
-		for (int layer = 0; layer < middle+2; layer++) {
+		for (int layer = 0; layer < middle+3; layer++) {
 			for (int topsteps = 0; topsteps < layer+1; topsteps++) {
 				x = middle - layer + topsteps*2 + shift;
 				y = middle + layer;
@@ -99,6 +104,8 @@ public class FirePositionStrategy implements GameStrategy {
 	public String firstTarget() {
 		counter++;
 		board[guessx[0]][guessy[0]] = true;
+		System.out.format("answer=%s %n", converter(guessx[0],guessy[0]));
+		peter++;
 		return converter(guessx[0],guessy[0]);
 	}
 
@@ -106,13 +113,22 @@ public class FirePositionStrategy implements GameStrategy {
 	public String nextTarget(String input) {
 		String answer = null;
 		if (input.toLowerCase().contains("sunk")){
-			hits.remove(0);
-			hits.remove(0);
+			if (!hits.isEmpty()){
+				hits.remove(0);
+				hits.remove(0);	
+//				hits.clear();
+			}
 			answer = nextTarget("miss");
 		}
 		else if (input.toLowerCase().contains("hit")) {
+/*			if (tempcheck) {
+				hits.add(tempx);
+				hits.add(tempy);
+				tempcheck = false;
+			} else{*/
 			hits.add(guessx[counter - 1]);
 			hits.add(guessy[counter - 1]);
+//			}
 			answer = guessingsmart();
 		} 
 		else if (!(hits.isEmpty())) {
@@ -125,9 +141,12 @@ public class FirePositionStrategy implements GameStrategy {
 		else {
 			answer = converter(guessx[counter],guessy[counter]);
 			board[guessx[counter]][guessy[counter]] = true;
+			peter++;
 			counter++;
 		}
-		
+/*		if (!input.toLowerCase().contains("hit")) {
+			tempcheck = false;
+		}*/
 		return answer;
 	}
 
@@ -138,15 +157,31 @@ public class FirePositionStrategy implements GameStrategy {
 		if (!checkIfAlreadyHit(x+1, y)){
 			answer = converter(x+1, y);
 			board[x+1][y] = true;
+			//tempx = x+1;
+			//tempy = y;
+			//tempcheck = true;
+			peter++;
 		} else if (!checkIfAlreadyHit(x-1, y)){
 			answer = converter(x-1, y);
 			board[x-1][y] = true;
+			//tempx = x-1;
+			//tempy = y;
+			//tempcheck = true;
+			peter++;
 		} else if (!checkIfAlreadyHit(x, y+1)){
 			answer = converter(x, y+1);
 			board[x][y+1] = true;
+			//tempx = x;
+			//tempy = y+1;
+			//tempcheck = true;
+			peter++;
 		} else if (!checkIfAlreadyHit(x, y-1)){
 			answer = converter(x, y-1);
 			board[x][y-1] = true;
+			//tempx = x;
+			//tempy = y-1;
+			//tempcheck = true;
+			peter++;
 		} else {
 			hits.remove(0);
 			hits.remove(0);
@@ -161,6 +196,11 @@ public class FirePositionStrategy implements GameStrategy {
 
 	private boolean checkIfAlreadyHit(int x, int y) {
 			return checkguesses(x, y) ? board[x][y] : true;		
+	}
+	
+	@Override
+	public int getPeter() {
+		return peter;
 	}
 		
 }

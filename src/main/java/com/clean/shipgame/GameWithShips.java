@@ -9,19 +9,24 @@ public class GameWithShips implements Torpedo {
 	
 	private ShipLocations shipLocations;
     private ShipImplementation impl;
-	private int winCondition = 0;
+	private int loseCondition = 0;
 	private int numberOfTargets;
 	private int boardSize;
 	private String filename;
 	private ShipFileReader shipFileReader;
+	private ConsolePrinter printer;
 	
     public Status fire(int x, int y) {
         Status status = Status.MISS;
         if(shipLocations.hit(x, y)){
             status = Status.HIT;
+            loseCondition++;
+            System.out.format("LoseCondition=%s %n", loseCondition);
+            printer.printBoard();
             if(checkIfSunken()){
                 status = Status.SUNK;
-                if(++winCondition == numberOfTargets){
+                System.out.format("SUNK!%n");
+                if(loseCondition == numberOfTargets){
                     status = Status.WIN;
                 }
             }
@@ -38,8 +43,11 @@ public class GameWithShips implements Torpedo {
     	impl.setFilename(filename);
     	impl.setShipLocations(shipLocations);
     	impl.setBoardSize(boardSize);
+    	impl.initialisation();
     	impl.placeShips();
+        printer = new ConsolePrinter(shipLocations);
     	numberOfTargets = impl.getTotalNumberOfTargets();
+    	System.out.format("numberOfTargets=%s %n", numberOfTargets);
     }
 
 	public void setShipLocations(ShipLocations shipLocations) {

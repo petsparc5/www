@@ -1,0 +1,32 @@
+-------------------------------------------------------------------------------
+Test set: com.clean.ship.ShipLocationsTest
+-------------------------------------------------------------------------------
+Tests run: 7, Failures: 7, Errors: 0, Skipped: 0, Time elapsed: 0.002 sec <<< FAILURE!
+com.clean.ship.ShipLocationsTest.testAddShipLocation()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at com.clean.ship.ShipLocationsTest.testAddShipLocation(ShipLocationsTest.java:23)
+
+com.clean.ship.ShipLocationsTest.testHit()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at com.clean.ship.ShipLocationsTest.testHit(ShipLocationsTest.java:51)
+
+com.clean.ship.ShipLocationsTest.testCheckShip()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at com.clean.ship.ShipLocationsTest.testCheckShip(ShipLocationsTest.java:32)
+
+com.clean.ship.ShipLocationsTest.testCheckShipWhenEmpty()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at com.clean.ship.ShipLocationsTest.testCheckShipWhenEmpty(ShipLocationsTest.java:43)
+
+com.clean.ship.ShipLocationsTest.testHitWhenMisses()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at com.clean.ship.ShipLocationsTest.testHitWhenMisses(ShipLocationsTest.java:61)
+
+com.clean.ship.ShipLocationsTest.testCheckSunken()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at com.clean.ship.ShipLocationsTest.testCheckSunken(ShipLocationsTest.java:71)
+
+com.clean.ship.ShipLocationsTest.testCheckSunkenWhenItIsNot()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at com.clean.ship.ShipLocationsTest.testCheckSunkenWhenItIsNot(ShipLocationsTest.java:83)
+

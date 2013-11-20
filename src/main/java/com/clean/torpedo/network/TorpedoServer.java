@@ -27,25 +27,37 @@ public class TorpedoServer {
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         ) {
             String inputLine, outputLine;
-            while(!(inputLine = in.readLine()).contains("greeting")){
-                gameWithShips.setBoardSize(Integer.parseInt(inputLine.split(" ")[1]));
-                gameWithShips.initialise();
+            while((inputLine = in.readLine()) != null){
+            	System.out.format("greeeting volt%n");
+            	if(inputLine.contains("greeting")){
+            		gameWithShips.setBoardSize(Integer.parseInt(inputLine.split(" ")[1]));
+            		gameWithShips.initialise();
+            		break;
+            	}
             }
             GameStrategy gameStrategy = new FirePositionStrategy(Integer.parseInt(inputLine.split(" ")[1]));
             gameStrategy.initialise();
             TorpedoProtocol torpedoProtocol = new TorpedoProtocol(gameWithShips);
             while((inputLine = in.readLine()) != null){
-                if(inputLine.toLowerCase().equals("win")){
+            	if(inputLine.toLowerCase().equals("win")){
                     System.out.format("Win!%n");
+                	System.out.format("Peter=%s %n", gameStrategy.getPeter());
                     break;
                 }
-                outputLine = torpedoProtocol.processInput(inputLine);
-                out.println(outputLine);
-                if(outputLine.equals("win")){
-                    System.out.format("Defeat!%n");
-                    break;
-                }
-                out.println(gameStrategy.nextTarget(inputLine));
+            	if(inputLine.toLowerCase().contains("fire") || inputLine.toLowerCase().contains("hit") ||
+            		inputLine.toLowerCase().contains("miss") || inputLine.toLowerCase().contains("sunk")) {
+	                outputLine = torpedoProtocol.processInput(inputLine);
+	                if(!outputLine.contains("init") && inputLine.toLowerCase().contains("fire")){
+	                	out.println(outputLine);
+	                	out.println(gameStrategy.nextTarget(inputLine));
+	                }
+	                if(outputLine.equals("win")){
+	                	out.println(outputLine);
+	                    System.out.format("Defeat!%n");
+	                    break;
+	                }
+	                
+	            }
             }
         } catch (IOException e) {
             e.printStackTrace();

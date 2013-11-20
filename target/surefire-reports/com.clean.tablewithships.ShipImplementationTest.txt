@@ -1,0 +1,20 @@
+-------------------------------------------------------------------------------
+Test set: com.clean.tablewithships.ShipImplementationTest
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 4, Errors: 0, Skipped: 0, Time elapsed: 0.001 sec <<< FAILURE!
+com.clean.tablewithships.ShipImplementationTest.testPlaceShipsWhenBoardSizeIsZero()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at com.clean.tablewithships.ShipImplementationTest.testPlaceShipsWhenBoardSizeIsZero(ShipImplementationTest.java:87)
+
+com.clean.tablewithships.ShipImplementationTest.testPlaceShipsWhenThereAreTrueReturnStatements()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at com.clean.tablewithships.ShipImplementationTest.testPlaceShipsWhenThereAreTrueReturnStatements(ShipImplementationTest.java:106)
+
+com.clean.tablewithships.ShipImplementationTest.testInitialisation()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at com.clean.tablewithships.ShipImplementationTest.testInitialisation(ShipImplementationTest.java:44)
+
+com.clean.tablewithships.ShipImplementationTest.testPlaceShips()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at com.clean.tablewithships.ShipImplementationTest.testPlaceShips(ShipImplementationTest.java:68)
+

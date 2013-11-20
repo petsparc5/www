@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite failures="6" time="0" errors="0" skipped="0" tests="6" name="com.clean.shipgame.GameWithShipsTest">
+  <properties>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="sun.boot.library.path" value="d:\app\jdk\jre\bin"/>
+    <property name="java.vm.version" value="24.45-b08"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="path.separator" value=";"/>
+    <property name="guice.disable.misplaced.annotation.check" value="true"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="user.script" value=""/>
+    <property name="user.country" value="GB"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.os.patch.level" value="Service Pack 1"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="c:\Users\Peter_Takacs@epam.com\torpedo"/>
+    <property name="java.runtime.version" value="1.7.0_45-b18"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
+    <property name="java.endorsed.dirs" value="d:\app\jdk\jre\lib\endorsed"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.io.tmpdir" value="C:\Users\Peter_Takacs@epam.com\AppData\Local\Temp\"/>
+    <property name="line.separator" value="
+"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.variant" value=""/>
+    <property name="os.name" value="Windows 7"/>
+    <property name="classworlds.conf" value="d:/app/Maven/bin/m2.conf"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.library.path" value="d:\app\jdk\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;c:\Users\Peter_Takacs@epam.com\bin;.;C:\Program Files (x86)\Git\local\bin;C:\Program Files (x86)\Git\mingw\bin;C:\Program Files (x86)\Git\bin;d:\app\jdk\bin;d:\app\Maven\bin;d:\app\DiffMerge\bin;c:\WINDOWS\system32;c:\WINDOWS;c:\WINDOWS\System32\Wbem;c:\WINDOWS\System32\WindowsPowerShell\v1.0\;c:\Program Files\TortoiseSVN\bin;."/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.class.version" value="51.0"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="os.version" value="6.1"/>
+    <property name="user.home" value="C:\Users\Peter_Takacs@epam.com"/>
+    <property name="user.timezone" value="Europe/Prague"/>
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
+    <property name="java.specification.version" value="1.7"/>
+    <property name="file.encoding" value="Cp1252"/>
+    <property name="user.name" value="Peter_Takacs"/>
+    <property name="java.class.path" value="d:/app/Maven/boot/plexus-classworlds-2.5.1.jar"/>
+    <property name="org.slf4j.simpleLogger.defaultLogLevel" value="info"/>
+    <property name="java.vm.specification.version" value="1.7"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.home" value="d:\app\jdk\jre"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher package"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.language" value="en"/>
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.version" value="1.7.0_45"/>
+    <property name="java.ext.dirs" value="d:\app\jdk\jre\lib\ext;C:\WINDOWS\Sun\Java\lib\ext"/>
+    <property name="sun.boot.class.path" value="d:\app\jdk\jre\lib\resources.jar;d:\app\jdk\jre\lib\rt.jar;d:\app\jdk\jre\lib\sunrsasign.jar;d:\app\jdk\jre\lib\jsse.jar;d:\app\jdk\jre\lib\jce.jar;d:\app\jdk\jre\lib\charsets.jar;d:\app\jdk\jre\lib\jfr.jar;d:\app\jdk\jre\classes"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="maven.home" value="d:\app\Maven"/>
+    <property name="file.separator" value="\"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="sun.desktop" value="windows"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+  </properties>
+  <testcase time="0" classname="com.clean.shipgame.GameWithShipsTest" name="com.clean.shipgame.GameWithShipsTest.testCheckIfSunkenAndReturnFalse">
+    <failure type="java.lang.NullPointerException">java.lang.NullPointerException
+	at com.clean.shipgame.GameWithShipsTest.testCheckIfSunkenAndReturnFalse(GameWithShipsTest.java:88)
+</failure>
+  </testcase>
+  <testcase time="0" classname="com.clean.shipgame.GameWithShipsTest" name="com.clean.shipgame.GameWithShipsTest.testInitialise">
+    <failure type="java.lang.NullPointerException">java.lang.NullPointerException
+	at com.clean.shipgame.GameWithShipsTest.testInitialise(GameWithShipsTest.java:30)
+</failure>
+  </testcase>
+  <testcase time="0" classname="com.clean.shipgame.GameWithShipsTest" name="com.clean.shipgame.GameWithShipsTest.testFireAndSunk">
+    <failure type="java.lang.NullPointerException">java.lang.NullPointerException
+	at com.clean.shipgame.GameWithShipsTest.testFireAndSunk(GameWithShipsTest.java:45)
+</failure>
+  </testcase>
+  <testcase time="0" classname="com.clean.shipgame.GameWithShipsTest" name="com.clean.shipgame.GameWithShipsTest.testFireAndHit">
+    <failure type="java.lang.NullPointerException">java.lang.NullPointerException
+	at com.clean.shipgame.GameWithShipsTest.testFireAndHit(GameWithShipsTest.java:60)
+</failure>
+  </testcase>
+  <testcase time="0" classname="com.clean.shipgame.GameWithShipsTest" name="com.clean.shipgame.GameWithShipsTest.testFireAndMiss">
+    <failure type="java.lang.NullPointerException">java.lang.NullPointerException
+	at com.clean.shipgame.GameWithShipsTest.testFireAndMiss(GameWithShipsTest.java:75)
+</failure>
+  </testcase>
+  <testcase time="0" classname="com.clean.shipgame.GameWithShipsTest" name="com.clean.shipgame.GameWithShipsTest.testCheckIfSunken">
+    <failure type="java.lang.NullPointerException">java.lang.NullPointerException
+	at com.clean.shipgame.GameWithShipsTest.testCheckIfSunken(GameWithShipsTest.java:100)
+</failure>
+  </testcase>
+</testsuite>

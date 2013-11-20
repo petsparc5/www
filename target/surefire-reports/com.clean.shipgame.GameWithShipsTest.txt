@@ -1,0 +1,28 @@
+-------------------------------------------------------------------------------
+Test set: com.clean.shipgame.GameWithShipsTest
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 6, Errors: 0, Skipped: 0, Time elapsed: 0.001 sec <<< FAILURE!
+com.clean.shipgame.GameWithShipsTest.testCheckIfSunkenAndReturnFalse()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at com.clean.shipgame.GameWithShipsTest.testCheckIfSunkenAndReturnFalse(GameWithShipsTest.java:88)
+
+com.clean.shipgame.GameWithShipsTest.testInitialise()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at com.clean.shipgame.GameWithShipsTest.testInitialise(GameWithShipsTest.java:30)
+
+com.clean.shipgame.GameWithShipsTest.testFireAndSunk()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at com.clean.shipgame.GameWithShipsTest.testFireAndSunk(GameWithShipsTest.java:45)
+
+com.clean.shipgame.GameWithShipsTest.testFireAndHit()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at com.clean.shipgame.GameWithShipsTest.testFireAndHit(GameWithShipsTest.java:60)
+
+com.clean.shipgame.GameWithShipsTest.testFireAndMiss()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at com.clean.shipgame.GameWithShipsTest.testFireAndMiss(GameWithShipsTest.java:75)
+
+com.clean.shipgame.GameWithShipsTest.testCheckIfSunken()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at com.clean.shipgame.GameWithShipsTest.testCheckIfSunken(GameWithShipsTest.java:100)
+
