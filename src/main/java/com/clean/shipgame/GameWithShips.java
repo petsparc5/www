@@ -1,6 +1,7 @@
 package com.clean.shipgame;
 
 import com.clean.interfaces.Torpedo;
+import com.clean.printer.ConsolePrinter;
 import com.clean.ship.ShipFileReader;
 import com.clean.ship.ShipLocations;
 import com.clean.tablewithships.ShipImplementation;
@@ -22,7 +23,7 @@ public class GameWithShips implements Torpedo {
             status = Status.HIT;
             loseCondition++;
             System.out.format("LoseCondition=%s %n", loseCondition);
-            printer.printBoard();
+            //printer.printBoard();
             if(checkIfSunken()){
                 status = Status.SUNK;
                 System.out.format("SUNK!%n");
@@ -45,7 +46,7 @@ public class GameWithShips implements Torpedo {
     	impl.setBoardSize(boardSize);
     	impl.initialisation();
     	impl.placeShips();
-        printer = new ConsolePrinter(shipLocations);
+        printer = new ConsolePrinter(shipLocations, boardSize);
     	numberOfTargets = impl.getTotalNumberOfTargets();
     	System.out.format("numberOfTargets=%s %n", numberOfTargets);
     }
