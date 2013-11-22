@@ -1,4 +1,4 @@
-package com.clean.torpedo.network;
+package com.clean.communication;
 
 import com.clean.shipgame.GameWithShips;
 

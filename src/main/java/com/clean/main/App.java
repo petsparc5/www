@@ -1,13 +1,13 @@
 package com.clean.main;
 
+import com.clean.communication.TorpedoClient;
+import com.clean.communication.TorpedoServer;
 import com.clean.interfaces.GameStrategy;
 import com.clean.ship.ShipFileReader;
 import com.clean.ship.ShipLocations;
 import com.clean.shipgame.GameWithShips;
 import com.clean.strategy.FirePositionStrategy;
 import com.clean.tablewithships.ShipImplementation;
-import com.clean.torpedo.network.TorpedoClient;
-import com.clean.torpedo.network.TorpedoServer;
 
 
 
