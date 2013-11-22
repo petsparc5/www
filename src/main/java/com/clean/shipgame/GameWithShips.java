@@ -45,7 +45,7 @@ public class GameWithShips implements Torpedo {
     	impl.setBoardSize(boardSize);
     	impl.initialisation();
     	impl.placeShips();
-        printer = new ConsolePrinter(shipLocations);
+        printer = new ConsolePrinter(shipLocations, boardSize);
     	numberOfTargets = impl.getTotalNumberOfTargets();
     	System.out.format("numberOfTargets=%s %n", numberOfTargets);
     }
