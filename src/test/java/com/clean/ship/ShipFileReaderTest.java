@@ -29,10 +29,9 @@ public class ShipFileReaderTest {
 		setUpShape2();
 		ships.add(shape);
 		ships.add(shape2);
-		String filename = "ships2.txt";
+		String filename = "stuff.file";
 		underTest.setFilename(filename);
 		ships = underTest.getShips();
-		System.out.format("ships=%s %n", ships);
 		//WHEN
 		underTest.read();
 		//THEN

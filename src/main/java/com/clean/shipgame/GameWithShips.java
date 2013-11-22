@@ -72,4 +72,8 @@ public class GameWithShips implements Torpedo {
 		
 	}
 
+	public void setNumberOfTargets(int numberOfTargets) {
+		this.numberOfTargets = numberOfTargets;
+	}
+
 }

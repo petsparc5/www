@@ -29,12 +29,11 @@ public class FirePositionStrategy implements GameStrategy {
 		String answer;
 		switch (input) {
 		case SUNK:
-			for (Point point : hits) {
-				if (!(guessesFirstHalf.contains(point))){
-					hits.remove(point);
+			for(int i = 0; i < hits.size(); i++){
+				if (!(guessesFirstHalf.contains(hits.get(i)))){
+					hits.remove(i);
 				}
 			}
-			hits.clear();
 			answer = getTarget(Status.MISS);
 			break;
 		case HIT:
@@ -52,7 +51,6 @@ public class FirePositionStrategy implements GameStrategy {
 			answer = "OOPS! BAD CODE ON MY PART! (But, please blame Csabi!)";
 			break;
 		}
-		tempPoint = null;
 		return answer;
 	}
 
@@ -64,11 +62,12 @@ public class FirePositionStrategy implements GameStrategy {
 			answer = converter(guesses.get(1));
 			guesses.remove(0);
 			peter++;
+			tempPoint = null;
 		}
 		return answer;
 	}
 
-	private String guessingsmart() {
+	public String guessingsmart() {
 		Point point = hits.get(0);
 		String answer;
 		tempPoint = shiftPoint(point, Direction.UP);
@@ -100,12 +99,11 @@ public class FirePositionStrategy implements GameStrategy {
 						}
 					}
 				}
-				
 			}
 		}
 		return answer;
 	}
-	
+
 	private Point shiftPoint (Point point, Direction direction){
 		Point newPoint;
 		switch (direction) {
@@ -138,6 +136,37 @@ public class FirePositionStrategy implements GameStrategy {
 
 	public void setGenerator(XYGuessGenerator generator) {
 		this.generator = generator;
+	}
+
+	public List<Point> getGuesses() {
+		return guesses;
+	}
+
+	public List<Point> getGuessesFirstHalf() {
+		return guessesFirstHalf;
+	}
+
+	public void setGuesses(List<Point> guesses) {
+		this.guesses = guesses;
+	}
+
+	public void setGuessesFirstHalf(List<Point> guessesFirstHalf) {
+		this.guessesFirstHalf = guessesFirstHalf;
+	}
+	public Point getTempPoint() {
+		return tempPoint;
+	}
+
+	public void setHits(List<Point> hits) {
+		this.hits = hits;
+	}
+
+	public void setTempPoint(Point tempPoint) {
+		this.tempPoint = tempPoint;
+	}
+
+	public List<Point> getHits() {
+		return hits;
 	}
 		
 }
