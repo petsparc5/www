@@ -27,28 +27,28 @@ public class TorpedoClient {
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
           ) {
         	gameWithShips.initialise();
-            String fromServer;
-            String fromUser;
+            String inpuLine;
+            String outputLine;
             TorpedoProtocol torpedoProtocol = new TorpedoProtocol(gameWithShips);
             out.println("greeting "+boardSize);
             out.println(gameStrategy.firstTarget());
-            while ((fromServer = in.readLine()) != null) {
-                if (fromServer.toLowerCase().contains("win")){
+            while ((inpuLine = in.readLine()) != null) {
+                if (inpuLine.toLowerCase().contains("win")){
                 	System.out.format("Peter=%s %n", gameStrategy.getPeter());
                     System.out.format("Win!%n");
                     break;
                 }
-            	if(fromServer.toLowerCase().contains("fire") || fromServer.toLowerCase().contains("hit") ||
-            	   fromServer.toLowerCase().contains("miss") || fromServer.toLowerCase().contains("sunk")){
-            		fromUser = torpedoProtocol.processInput(fromServer);
-	                if(fromServer.toLowerCase().contains("fire") && !fromUser.contains("init")){
-	                	out.println(fromUser);
-			            fromUser = gameStrategy.nextTarget(fromServer);
-			            System.out.format("fromUser=%s %n",	fromUser);
-			            out.println(fromUser);
+            	if(inpuLine.toLowerCase().contains("fire") || inpuLine.toLowerCase().contains("hit") ||
+            	   inpuLine.toLowerCase().contains("miss") || inpuLine.toLowerCase().contains("sunk")){
+            		outputLine = torpedoProtocol.processInput(inpuLine);
+	                if(inpuLine.toLowerCase().contains("fire") && !outputLine.contains("init")){
+	                	out.println(outputLine);
+			            outputLine = gameStrategy.nextTarget(inpuLine);
+			            System.out.format("fromUser=%s %n",	outputLine);
+			            out.println(outputLine);
 	                }
-	                if(fromUser.toLowerCase().equals("win")){
-			            out.println(fromUser);
+	                if(outputLine.toLowerCase().equals("win")){
+			            out.println(outputLine);
 			            System.out.format("Defeat!%n");
 	                    break;
 	                }
