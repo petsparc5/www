@@ -4,30 +4,42 @@ import com.clean.ship.ShipLocations;
 
 public class ConsolePrinter {
 	
-	ShipLocations shipLocations;
+	private ShipLocations shipLocations;
+	private final int boardSize;
 	
-	public ConsolePrinter(ShipLocations shipLocations) {
-		super();
-		this.shipLocations = shipLocations;
-	}
+    public ConsolePrinter(ShipLocations shipLocations, int boardSize) {
+        super();
+        this.shipLocations = shipLocations;
+        this.boardSize = boardSize;
+    }
+	
 	private String converter(boolean value) {
-		return value ? "X" : " ";
+		return value ? String.format("%c",'\u00B7') : "¤";
 	}	
 	public void printBoard() {
 		StringBuilder stringBuilder = new StringBuilder();
-		for (int i = 0; i < 20; i++) {
-			for (int j = 0; j < 20; j++) {
-				stringBuilder.append(converter(shipLocations.checkPoint(j, 20-i)));
+		for(int i=0; i<boardSize+3; i++){
+		    stringBuilder.append("-");
+		}
+		stringBuilder.append("%n");
+		for (int i = 0; i < boardSize; i++) {
+		    stringBuilder.append("|");
+			for (int j = 0; j < boardSize; j++) {
+				stringBuilder.append(converter(shipLocations.checkPoint(j, boardSize-i))+" ");
 			}
+			stringBuilder.append("|");
 			stringBuilder.append("\n");
 		}
+		for(int i=0; i<boardSize+3; i++){
+            stringBuilder.append("-");
+        }
 		System.out.format("Table:%n%s%n", stringBuilder.toString());
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(500);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+
 
 }
