@@ -1,0 +1,21 @@
+/*	private boolean checkTShips() {
+		boolean answer = false;
+		List<Ship> tShipList = shipLocations.gettShipLocations();
+		for (Ship ship : tShipList) {
+			answer |= shipLocations.checkShip(ship);
+		}
+		return answer;
+	}*/
+
+Console PRinter
+
+
+/*    public boolean checkShip(Ship ship) {
+    	boolean answer = false;
+		for (Ship shipInTheList : shipLocations) {
+			answer |= (ship == shipInTheList);
+		}
+    	return answer;
+    }*/
+
+ShipLocation
