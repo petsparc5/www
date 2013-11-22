@@ -1,4 +1,4 @@
-package com.clean.shipgame;
+package com.clean.printer;
 
 import com.clean.ship.ShipLocations;
 
