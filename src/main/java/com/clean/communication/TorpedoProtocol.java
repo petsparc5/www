@@ -1,14 +1,14 @@
 package com.clean.communication;
 
-import com.clean.shipgame.GameWithShips;
+import com.clean.interfaces.Torpedo;
 
 
 public class TorpedoProtocol {
-    private GameWithShips gameWithShips;
+    private Torpedo torpedo;
     
-    public TorpedoProtocol(GameWithShips gameWithShips) {
+    public TorpedoProtocol(Torpedo torpedo) {
         super();
-        this.gameWithShips = gameWithShips;
+        this.torpedo = torpedo;
     }
 
     public String processInput(String theInput) {
@@ -16,7 +16,7 @@ public class TorpedoProtocol {
         if(theInput.split(" ").length >= 3){
         	int x = Integer.parseInt(theInput.split(" ")[1]);
         	int y = Integer.parseInt(theInput.split(" ")[2]);
-        	switch (gameWithShips.fire(x, y)) {
+        	switch (torpedo.fire(x, y)) {
 		    case HIT: 
 		        outputLine = "hit";
 		        break;
