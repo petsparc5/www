@@ -28,8 +28,8 @@ public class TorpedoServer {
         ) {
             String inputLine, outputLine;
             while((inputLine = in.readLine()) != null){
-            	System.out.format("greeeting volt%n");
             	if(inputLine.contains("greeting")){
+            	    System.out.format("Greeeting happened%n");
             		gameWithShips.setBoardSize(Integer.parseInt(inputLine.split(" ")[1]));
             		gameWithShips.initialise();
             		break;
