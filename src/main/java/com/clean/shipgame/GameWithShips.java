@@ -1,11 +1,16 @@
 package com.clean.shipgame;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.clean.interfaces.Torpedo;
+import com.clean.printer.ConsolePrinter;
 import com.clean.ship.ShipFileReader;
 import com.clean.ship.ShipLocations;
 import com.clean.tablewithships.ShipImplementation;
 
 public class GameWithShips implements Torpedo {
+	private final Logger logger = LoggerFactory.getLogger(GameWithShips.class);
 	
 	private ShipLocations shipLocations;
     private ShipImplementation impl;
@@ -17,6 +22,7 @@ public class GameWithShips implements Torpedo {
 	private ConsolePrinter printer;
 	
     public Status fire(int x, int y) {
+        logger.debug("fire {} {}", x,y);
         Status status = Status.MISS;
         if(shipLocations.hit(x, y)){
             status = Status.HIT;

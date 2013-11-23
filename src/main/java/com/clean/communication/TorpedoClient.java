@@ -31,7 +31,6 @@ public class TorpedoClient {
         	gameWithShips.initialise();
             TorpedoProtocol torpedoProtocol = new TorpedoProtocol(gameWithShips);
             out.println("greeting "+boardSize);
-            out.println(gameStrategy.firstTarget());
             messageHandler = new MessageHandler(out, in, gameStrategy, torpedoProtocol);
             messageHandler.run();
         } catch (UnknownHostException e) {
