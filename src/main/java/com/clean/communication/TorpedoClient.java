@@ -10,7 +10,6 @@ import java.net.UnknownHostException;
 import com.clean.communication.message.MessageHandler;
 import com.clean.interfaces.GameStrategy;
 import com.clean.shipgame.GameWithShips;
-import com.clean.shipgame.Status;
 
 public class TorpedoClient {
 
@@ -32,8 +31,7 @@ public class TorpedoClient {
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
           ) {
         	
-            out.println("greeting "+boardSize);
-            out.println(gameStrategy.getTarget(Status.MISS));
+            out.println("greeting " + boardSize);
             messageHandler = new MessageHandler(out, in, gameStrategy, torpedoProtocol);
             messageHandler.run();
         } catch (UnknownHostException e) {

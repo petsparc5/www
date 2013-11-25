@@ -14,7 +14,7 @@ public class MessageHandler {
     BufferedReader in;
     GameStrategy gameStrategy;
     TorpedoProtocol torpedoProtocol;
-
+    
     public MessageHandler(PrintWriter out, BufferedReader in, GameStrategy gameStrategy, TorpedoProtocol torpedoProtocol) {
         super();
         this.out = out;
@@ -22,7 +22,7 @@ public class MessageHandler {
         this.gameStrategy = gameStrategy;
         this.torpedoProtocol = torpedoProtocol;
     }
-
+    
     public void run() {
         try {
             processMessages();
@@ -30,10 +30,12 @@ public class MessageHandler {
             e.printStackTrace();
         }
     }
-
+    
     private void processMessages() throws IOException {
+        out.println(gameStrategy.getTarget(Status.MISS));
         String inputLine;
         String outputLine;
+        String outPut;
         while((inputLine = in.readLine()) != null){
             if(inputLine.toLowerCase().equals("win")){
                 System.out.format("Win!%n");
@@ -42,21 +44,33 @@ public class MessageHandler {
             }
             if(isValidProtocolMessage(inputLine)) {
                 outputLine = torpedoProtocol.processInput(inputLine);
-                if(inputLine.toLowerCase().contains("fire")){
-                    out.println(outputLine);
-                } else if(outputLine.equals("win")){
-                    out.println(outputLine);
+                if(outputLine.equals("win")){
                     System.out.format("Defeat!%n");
+                    System.out.format("Peter=%s %n", gameStrategy.getPeter());
+                    out.println(outputLine);
                     break;
-                } else if(isResponsToFire(inputLine)){
-                    Status inputStatus = convert(inputLine);
-                    out.println(gameStrategy.getTarget(inputStatus));
+                }if(inputLine.toLowerCase().contains("fire")){
+                    out.println(outputLine);
                 }
-
+                if(inputIsResponseToFireMessage(inputLine)){
+                	Status inStatus = convert(inputLine);
+                    outPut = gameStrategy.getTarget(inStatus);
+                    out.println(outPut);
+                }
             }
         }
     }
+    
+    private boolean inputIsResponseToFireMessage(String inputLine) {
+        return inputLine.toLowerCase().contains("hit") || inputLine.toLowerCase().contains("miss") ||
+                inputLine.toLowerCase().contains("sunk");
+    }
 
+    private boolean isValidProtocolMessage(String inputLine) {
+        return inputLine.toLowerCase().contains("fire") || inputLine.toLowerCase().contains("hit") ||
+                inputLine.toLowerCase().contains("miss") || inputLine.toLowerCase().contains("sunk");
+    }
+    
     private Status convert(String inputLine) {
         Status answer;
         if(inputLine.toLowerCase().equals("hit")){
@@ -68,15 +82,5 @@ public class MessageHandler {
         }
         
         return answer;
-    }
-
-    private boolean isResponsToFire(String inputLine) {
-        return inputLine.toLowerCase().contains("hit") ||
-                inputLine.toLowerCase().contains("miss") || inputLine.toLowerCase().contains("sunk");
-    }
-
-    private boolean isValidProtocolMessage(String inputLine) {
-        return inputLine.toLowerCase().contains("fire") || inputLine.toLowerCase().contains("hit") ||
-                inputLine.toLowerCase().contains("miss") || inputLine.toLowerCase().contains("sunk");
     }
 }

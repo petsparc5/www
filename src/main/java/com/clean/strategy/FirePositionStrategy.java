@@ -40,6 +40,7 @@ public class FirePositionStrategy implements GameStrategy {
 				}
 			}
 			answer = getTarget(Status.MISS);
+			tempPoint = null;
 			break;
 		case HIT:
 			if (tempPoint == null) {
