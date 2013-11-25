@@ -20,14 +20,9 @@ public class XYGuessGenerator {
 		guesses.add(point);
 	}
 
-	public void generateOptimalGuess(int shift) {
+	public void generateOptimalGuess(int shift, int oddEven) {
 		int middle = (boardSize-1) /2;
-		int start = (boardSize % 2) * (-1) + 1;
-		for (int layer = start; layer < middle+5; layer = layer + 2) {
-			if ((layer % 2 == start) && ((layer == middle+4) || (layer == middle+3))) {
-				layer = boardSize % 2;
-				System.out.println("reset");
-			}
+		for (int layer = oddEven; layer < middle+3; layer = layer + 2) {
 			makeTopGuesses(layer, middle, shift);
 			if (!(layer == 0)) {
 				makeBottomGuesses(layer, middle, shift);
@@ -82,5 +77,9 @@ public class XYGuessGenerator {
 	}
 	public List<Point> getGuesses() {
 		return guesses;
+	}
+	
+	public void resetGuesses() {
+		guesses = new ArrayList<Point>();
 	}
 }

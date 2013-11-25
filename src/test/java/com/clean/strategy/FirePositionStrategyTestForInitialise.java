@@ -25,15 +25,26 @@ public class FirePositionStrategyTestForInitialise {
 	@Test
 	public void testInitialiseForRunningTheCorrectMethods() {
 		//GIVEN
-		generator.addMagicElement();
+		generator.generateOptimalGuess(0, 0);
 		EasyMock.expectLastCall();
-		generator.generateOptimalGuess(0);
+		generator.generateOptimalGuess(0, 1);
 		EasyMock.expectLastCall();
 		List<Point> list = new ArrayList<>();
 		EasyMock.expect(generator.getGuesses()).andReturn(list);
-		generator.generateOptimalGuess(1);
+		generator.resetGuesses();
 		EasyMock.expectLastCall();
-		EasyMock.expect(generator.getGuesses()).andReturn(list);
+		generator.addMagicElement();
+		EasyMock.expectLastCall();
+		generator.generateOptimalGuess(0, 0);
+		EasyMock.expectLastCall();
+		generator.generateOptimalGuess(0, 1);
+		EasyMock.expectLastCall();
+		generator.generateOptimalGuess(1, 0);
+		EasyMock.expectLastCall();
+		generator.generateOptimalGuess(1, 1);
+		EasyMock.expectLastCall();
+		List<Point> list1 = new ArrayList<>();
+		EasyMock.expect(generator.getGuesses()).andReturn(list1);
 		EasyMock.replay(generator);
 		//WHEN
 		underTest.initialise();
@@ -44,9 +55,11 @@ public class FirePositionStrategyTestForInitialise {
 	@Test
 	public void testInitialiseForCorrectlyStoringTheHalfLists() {
 		//GIVEN
-		generator.generateOptimalGuess(EasyMock.anyInt());
+		generator.generateOptimalGuess(EasyMock.anyInt(), EasyMock.anyInt());
 		EasyMock.expectLastCall().anyTimes();
 		generator.addMagicElement();
+		EasyMock.expectLastCall().anyTimes();
+		generator.resetGuesses();
 		EasyMock.expectLastCall().anyTimes();
 		List<Point> list1 = new ArrayList<>();
 		
@@ -68,9 +81,11 @@ public class FirePositionStrategyTestForInitialise {
 	@Test
 	public void testInitialiseForCorrectlyStoringTheFullLists() {
 		//GIVEN
-		generator.generateOptimalGuess(EasyMock.anyInt());
+		generator.generateOptimalGuess(EasyMock.anyInt(), EasyMock.anyInt());
 		EasyMock.expectLastCall().anyTimes();
 		generator.addMagicElement();
+		EasyMock.expectLastCall().anyTimes();
+		generator.resetGuesses();
 		EasyMock.expectLastCall().anyTimes();
 		List<Point> list = new ArrayList<>();
 		EasyMock.expect(generator.getGuesses()).andReturn(list);
@@ -89,43 +104,4 @@ public class FirePositionStrategyTestForInitialise {
 		EasyMock.verify(generator);
 		Assert.assertEquals(expectedFull, underTest.getGuesses());
 	}
-	
-	
-	
-/*	@Test
-	public void test1() {
-		String fire1 = underTest.nextTarget("miss");
-		System.out.format("fire1=%s %n", fire1);
-		String fire2 = underTest.nextTarget("hit");
-		System.out.format("fire2=%s %n", fire2);
-		String fire3 = underTest.nextTarget("hit");
-		System.out.format("fire3=%s %n", fire3);
-		String fire4 = underTest.nextTarget("sunk");
-		System.out.format("fire4=%s %n", fire4);
-		String fire5 = underTest.nextTarget("miss");
-		System.out.format("fire5=%s %n", fire5);
-		String fire6 = underTest.nextTarget("sunk");
-		System.out.format("fire6=%s %n", fire6);
-		String fire7 = underTest.nextTarget("sunk");
-		System.out.format("fire7=%s %n", fire7);
-		String fire8 = underTest.nextTarget("miss");
-		System.out.format("fire8=%s %n", fire8);
-		String fire9 = underTest.nextTarget("miss");
-		System.out.format("fire9=%s %n", fire9);
-		String fire10 = underTest.nextTarget("miss");
-		System.out.format("fire10=%s %n", fire10);
-		String fire11 = underTest.nextTarget("miss");
-		System.out.format("fire11=%s %n", fire11);
-		String fire12 = underTest.nextTarget("miss");
-		System.out.format("fire12=%s %n", fire12);
-		String fire13 = underTest.nextTarget("miss");
-		System.out.format("fire13=%s %n", fire13);
-		String fire14 = underTest.nextTarget("miss");
-		System.out.format("fire14=%s %n", fire14);
-		String fire15 = underTest.nextTarget("miss");
-		System.out.format("fire15=%s %n", fire15);
-		String fire16 = underTest.nextTarget("miss");
-		System.out.format("fire16=%s %n", fire16);
-	}
-*/
 }

@@ -33,26 +33,31 @@ public class XYGuessGeneratorTest {
 			Assert.assertTrue(actual.contains(point));
 		}
 	}
-
-	@Test
-	public void testThis() {
-		underTest = new XYGuessGenerator(4);
-		underTest.generateOptimalGuess(0);
-		underTest.generateOptimalGuess(1);
-		List<Point> points = underTest.getGuesses();
-		for (Point point : points) {
-			System.out.format("point=%d, %d %n", point.getX(), point.getY());
-		}
-	}
 	
 	@Test
-	public void testGenerateOptimalGuessWithBoardSizeTen(){
+	public void testGenerateOptimalGuessWithWithNoShiftAndFirstHalf(){
 		//GIVEN
 		underTest = new XYGuessGenerator(10);
-		List<Point> expected = helper.makeExpectedListWithBoardSizeOfTen();
+		List<Point> expected = helper.makeExpectedListWithNoShiftAndFirstHalf();
 		List<Point> actual;
 		//WHEN
-		underTest.generateOptimalGuess(0);
+		underTest.generateOptimalGuess(0, 0);
+		actual = underTest.getGuesses();
+		//THEN
+		Assert.assertEquals(expected.size(), actual.size());
+		for (Point point : expected) {
+			Assert.assertTrue(actual.contains(point));
+		}
+	}
+	
+	@Test
+	public void testGenerateOptimalGuessWithWithNoShiftAndSecondHalf(){
+		//GIVEN
+		underTest = new XYGuessGenerator(10);
+		List<Point> expected = helper.makeExpectedListWithNoShiftAndSecondHalf();
+		List<Point> actual;
+		//WHEN
+		underTest.generateOptimalGuess(0, 1);
 		actual = underTest.getGuesses();
 		//THEN
 		Assert.assertEquals(expected.size(), actual.size());
@@ -62,13 +67,13 @@ public class XYGuessGeneratorTest {
 	}
 
 	@Test
-	public void testGenerateOptimalGuessWithBoardSizeTenAndShiftOne(){
+	public void testGenerateOptimalGuessWithWithOneShiftAndFirstHalf(){
 		//GIVEN
 		underTest = new XYGuessGenerator(10);
-		List<Point> expected = helper.makeExpectedListWithBoardSizeOfTenAndShiftOne();
+		List<Point> expected = helper.makeExpectedListWithAShiftAndFirstHalf();
 		List<Point> actual;
 		//WHEN
-		underTest.generateOptimalGuess(1);
+		underTest.generateOptimalGuess(1, 0);
 		actual = underTest.getGuesses();
 		//THEN
 		Assert.assertEquals(expected.size(), actual.size());
@@ -78,29 +83,13 @@ public class XYGuessGeneratorTest {
 	}
 	
 	@Test
-	public void testGenerateOptimalGuessWithBoardSizeEleven(){
+	public void testGenerateOptimalGuessWithWithAShiftAndSecondHalf(){
 		//GIVEN
-		underTest = new XYGuessGenerator(11);
-		List<Point> expected = helper.makeExpectedListWithBoardSizeOfEleven();
+		underTest = new XYGuessGenerator(10);
+		List<Point> expected = helper.makeExpectedListWithAShiftAndSecondHalf();
 		List<Point> actual;
 		//WHEN
-		underTest.generateOptimalGuess(0);
-		actual = underTest.getGuesses();
-		//THEN
-		Assert.assertEquals(expected.size(), actual.size());
-		for (Point point : expected) {
-			Assert.assertTrue(actual.contains(point));
-		}
-	}
-	
-	@Test
-	public void testGenerateOptimalGuessWithBoardSizeElevenShiftOne(){
-		//GIVEN
-		underTest = new XYGuessGenerator(11);
-		List<Point> expected = helper.makeExpectedListWithBoardSizeOfElevenAndShiftOne();
-		List<Point> actual;
-		//WHEN
-		underTest.generateOptimalGuess(1);
+		underTest.generateOptimalGuess(1, 1);
 		actual = underTest.getGuesses();
 		//THEN
 		Assert.assertEquals(expected.size(), actual.size());

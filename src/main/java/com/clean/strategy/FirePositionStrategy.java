@@ -17,10 +17,15 @@ public class FirePositionStrategy implements GameStrategy {
 	private Point tempPoint;
 	
 	public void initialise() {
-		generator.addMagicElement();
-		generator.generateOptimalGuess(0);
+		generator.generateOptimalGuess(0, 0);
+		generator.generateOptimalGuess(0, 1);
 		guessesFirstHalf = generator.getGuesses();
-		generator.generateOptimalGuess(1);
+		generator.resetGuesses();
+		generator.addMagicElement();
+		generator.generateOptimalGuess(0, 0);
+		generator.generateOptimalGuess(0, 1);
+		generator.generateOptimalGuess(1, 0);
+		generator.generateOptimalGuess(1, 1);
 		guesses = generator.getGuesses();
 	}
 
