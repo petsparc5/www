@@ -33,6 +33,17 @@ public class XYGuessGeneratorTest {
 			Assert.assertTrue(actual.contains(point));
 		}
 	}
+
+	@Test
+	public void testThis() {
+		underTest = new XYGuessGenerator(4);
+		underTest.generateOptimalGuess(0);
+		underTest.generateOptimalGuess(1);
+		List<Point> points = underTest.getGuesses();
+		for (Point point : points) {
+			System.out.format("point=%d, %d %n", point.getX(), point.getY());
+		}
+	}
 	
 	@Test
 	public void testGenerateOptimalGuessWithBoardSizeTen(){
