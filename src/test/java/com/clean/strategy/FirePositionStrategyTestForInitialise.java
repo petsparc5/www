@@ -33,8 +33,6 @@ public class FirePositionStrategyTestForInitialise {
 		EasyMock.expect(generator.getGuesses()).andReturn(list);
 		generator.resetGuesses();
 		EasyMock.expectLastCall();
-		generator.addMagicElement();
-		EasyMock.expectLastCall();
 		generator.generateOptimalGuess(0, 0);
 		EasyMock.expectLastCall();
 		generator.generateOptimalGuess(0, 1);
@@ -56,8 +54,6 @@ public class FirePositionStrategyTestForInitialise {
 	public void testInitialiseForCorrectlyStoringTheHalfLists() {
 		//GIVEN
 		generator.generateOptimalGuess(EasyMock.anyInt(), EasyMock.anyInt());
-		EasyMock.expectLastCall().anyTimes();
-		generator.addMagicElement();
 		EasyMock.expectLastCall().anyTimes();
 		generator.resetGuesses();
 		EasyMock.expectLastCall().anyTimes();
@@ -82,8 +78,6 @@ public class FirePositionStrategyTestForInitialise {
 	public void testInitialiseForCorrectlyStoringTheFullLists() {
 		//GIVEN
 		generator.generateOptimalGuess(EasyMock.anyInt(), EasyMock.anyInt());
-		EasyMock.expectLastCall().anyTimes();
-		generator.addMagicElement();
 		EasyMock.expectLastCall().anyTimes();
 		generator.resetGuesses();
 		EasyMock.expectLastCall().anyTimes();

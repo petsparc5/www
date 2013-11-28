@@ -10,10 +10,13 @@ import com.clean.shipgame.Status;
 
 public class MessageHandler {
 
-    PrintWriter out;
-    BufferedReader in;
-    GameStrategy gameStrategy;
-    TorpedoProtocol torpedoProtocol;
+    
+    private PrintWriter out;
+    private BufferedReader in;
+    private GameStrategy gameStrategy;
+    private TorpedoProtocol torpedoProtocol;
+    private String target;
+    int peter;
     
     public MessageHandler(PrintWriter out, BufferedReader in, GameStrategy gameStrategy, TorpedoProtocol torpedoProtocol) {
         super();
@@ -22,65 +25,67 @@ public class MessageHandler {
         this.gameStrategy = gameStrategy;
         this.torpedoProtocol = torpedoProtocol;
     }
-    
-    public void run() {
+
+
+    private void processMessages(){
+        String inLine = null;
+        String outLine;
         try {
-            processMessages();
+            while((inLine = in.readLine()) != null){
+                if(inLine.contains("fire")){
+                    outLine = torpedoProtocol.processInput(inLine);
+                    out.println(outLine);
+                    if(outLine.equals("win")){
+                    	peter = gameStrategy.getPeter();
+                    	System.out.format("Peter=%d %n", peter);
+                        System.out.format("Opponent used getOpponentShips()... Hardly fair!%n");
+                        out.println(outLine);
+                        break;
+                    }
+                    out.println(target);
+                } 
+                if(isResponseToFire(inLine)){
+                    if("win".equalsIgnoreCase(inLine)){
+                    	peter = gameStrategy.getPeter();
+                    	System.out.format("Peter=%d %n", peter);
+                        System.out.format("Victory is where is should be!%n");
+                        break;
+                    }
+                    target = gameStrategy.getTarget(convertStringToStatus(inLine));
+                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
-    private void processMessages() throws IOException {
-        out.println(gameStrategy.getTarget(Status.MISS));
-        String inputLine;
-        String outputLine;
-        String outPut;
-        while((inputLine = in.readLine()) != null){
-            if(inputLine.toLowerCase().equals("win")){
-                System.out.format("Win!%n");
-                System.out.format("Peter=%s %n", gameStrategy.getPeter());
-                break;
-            }
-            if(isValidProtocolMessage(inputLine)) {
-                outputLine = torpedoProtocol.processInput(inputLine);
-                if(outputLine.equals("win")){
-                    System.out.format("Defeat!%n");
-                    System.out.format("Peter=%s %n", gameStrategy.getPeter());
-                    out.println(outputLine);
-                    break;
-                }if(inputLine.toLowerCase().contains("fire")){
-                    out.println(outputLine);
-                }
-                if(inputIsResponseToFireMessage(inputLine)){
-                	Status inStatus = convert(inputLine);
-                    outPut = gameStrategy.getTarget(inStatus);
-                    out.println(outPut);
-                }
-            }
-        }
-    }
-    
-    private boolean inputIsResponseToFireMessage(String inputLine) {
-        return inputLine.toLowerCase().contains("hit") || inputLine.toLowerCase().contains("miss") ||
-                inputLine.toLowerCase().contains("sunk");
-    }
 
-    private boolean isValidProtocolMessage(String inputLine) {
-        return inputLine.toLowerCase().contains("fire") || inputLine.toLowerCase().contains("hit") ||
-                inputLine.toLowerCase().contains("miss") || inputLine.toLowerCase().contains("sunk");
+
+    private boolean isResponseToFire(String inLine) {
+        return inLine.contains("miss") || inLine.contains("hit") || 
+                inLine.contains("sunk") || inLine.contains("win");
     }
     
-    private Status convert(String inputLine) {
-        Status answer;
-        if(inputLine.toLowerCase().equals("hit")){
-            answer = Status.HIT;
-        } else if(inputLine.toLowerCase().equals("miss")){
+    private Status convertStringToStatus(String inLine) {
+        Status answer = Status.MISS;
+        if("miss".equals(inLine.toLowerCase())){
             answer = Status.MISS;
-        } else {
+        } else if("hit".equals(inLine.toLowerCase())){
+            answer = Status.HIT;
+        } else if("sunk".equals(inLine.toLowerCase())){
             answer = Status.SUNK;
+        } else if("win".equals(inLine.toLowerCase())){
+            answer = Status.WIN;
         }
-        
         return answer;
     }
+
+
+    public void startProcessingMessages() {
+        processMessages();
+    }
+
+    public void setTarget(String target) {
+        this.target = target;
+    }
+    
 }

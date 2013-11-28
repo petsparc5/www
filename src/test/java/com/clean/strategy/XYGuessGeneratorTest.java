@@ -19,22 +19,6 @@ public class XYGuessGeneratorTest {
 	}
 	
 	@Test
-	public void testAddMagicElement(){
-		//GIVEN
-		underTest = new XYGuessGenerator(20);
-		List<Point> expected = helper.makeExpectedListForMagicElement();
-		List<Point> actual;
-		//WHEN
-		underTest.addMagicElement();
-		actual = underTest.getGuesses();
-		//THEN
-		Assert.assertEquals(expected.size(), actual.size());
-		for (Point point : expected) {
-			Assert.assertTrue(actual.contains(point));
-		}
-	}
-	
-	@Test
 	public void testGenerateOptimalGuessWithWithNoShiftAndFirstHalf(){
 		//GIVEN
 		underTest = new XYGuessGenerator(10);

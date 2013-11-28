@@ -14,11 +14,6 @@ public class XYGuessGenerator {
 	
 	private int boardSize;
 	private List<Point> guesses = new ArrayList<>();
-	
-	public void addMagicElement() {
-		Point point = new Point(-1, -1);
-		guesses.add(point);
-	}
 
 	public void generateOptimalGuess(int shift, int oddEven) {
 		int middle = (boardSize-1) /2;

@@ -15,13 +15,13 @@ public class FirePositionStrategy implements GameStrategy {
 	private List<Point> guessesFirstHalf = new ArrayList<>();
 	private int peter = 0;
 	private Point tempPoint;
+	private Point previousPoint;
 	
 	public void initialise() {
 		generator.generateOptimalGuess(0, 0);
 		generator.generateOptimalGuess(0, 1);
 		guessesFirstHalf = generator.getGuesses();
 		generator.resetGuesses();
-		generator.addMagicElement();
 		generator.generateOptimalGuess(0, 0);
 		generator.generateOptimalGuess(0, 1);
 		generator.generateOptimalGuess(1, 0);
@@ -40,11 +40,10 @@ public class FirePositionStrategy implements GameStrategy {
 				}
 			}
 			answer = getTarget(Status.MISS);
-			tempPoint = null;
 			break;
 		case HIT:
 			if (tempPoint == null) {
-				hits.add(guesses.get(0));
+				hits.add(previousPoint);
 			} else {
 				hits.add(tempPoint);
 			}
@@ -65,7 +64,8 @@ public class FirePositionStrategy implements GameStrategy {
 		if (!(hits.isEmpty())){
 			answer = guessingsmart();			
 		} else {
-			answer = converter(guesses.get(1));
+			previousPoint = guesses.get(0);
+			answer = converter(guesses.get(0));
 			guesses.remove(0);
 			peter++;
 			tempPoint = null;
@@ -97,12 +97,7 @@ public class FirePositionStrategy implements GameStrategy {
 						peter++;
 					} else {
 						hits.remove(0);
-						if(hits.isEmpty()){
-							answer = getTarget(Status.MISS);
-						}
-						else {
-							answer = guessingsmart();
-						}
+						answer = getTarget(Status.MISS);
 					}
 				}
 			}
