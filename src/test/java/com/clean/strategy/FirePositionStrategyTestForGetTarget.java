@@ -26,7 +26,7 @@ public class FirePositionStrategyTestForGetTarget {
 	}
 	
 	@Test
-	public void testGetTargetWhenThereIsANeedToRemove() {
+	public void testGetTargetForSunkWhenThereIsANeedToRemove() {
 		//GIVEN
 		setUpForSunkWhenThereIsANeedToRemove();
 		//WHEN
@@ -38,7 +38,7 @@ public class FirePositionStrategyTestForGetTarget {
 	}
 	
 	@Test
-	public void testGetTargetWhenThereIsNoNeedToRemove() {
+	public void testGetTargetForSunkWhenThereIsNoNeedToRemove() {
 		//GIVEN
 		setUpForSunkWhenThereIsNoNeedToRemove();
 		Point point = new Point(1, 3);
@@ -84,12 +84,15 @@ public class FirePositionStrategyTestForGetTarget {
 	public void testGetTargetForMissWhenHitsIsEmpty() {
 		//GIVEN
 		setUpForMissWhenHitsIsEmpty();
+		Point expectedPoint = new Point(1, 3);
 		//WHEN
 		String actual = underTest.getTarget(Status.MISS);
 		//THEN
 		Assert.assertEquals(1, underTest.getPeter());
-		Assert.assertEquals("fire 7 4", actual);
+		Assert.assertEquals("fire 1 3", actual);
 		Assert.assertEquals(null, underTest.getTempPoint());
+		Assert.assertEquals(expectedPoint, underTest.getPreviousPoint());
+		Assert.assertTrue(underTest.getGuesses().isEmpty());
 	}
 
 	@Test
@@ -106,7 +109,6 @@ public class FirePositionStrategyTestForGetTarget {
 	}
 	
 	public void setUpForSunkWhenThereIsANeedToRemove() {
-		listFull.add(new Point(1, 3));
 		listFull.add(new Point(5, 5));
 		listHits.add(new Point(1, 2));
 		underTest.setHits(listHits);
@@ -123,7 +125,7 @@ public class FirePositionStrategyTestForGetTarget {
 	}
 	
 	public void setUpForHitWhenTempIsEmpty() {
-		listFull.add(new Point(10, 13));
+		underTest.setPreviousPoint(new Point(10, 13));
 		listFull.add(new Point(10, 14));
 		underTest.setHits(listHits);
 		underTest.setGuesses(listFull);
@@ -140,7 +142,6 @@ public class FirePositionStrategyTestForGetTarget {
 	
 	public void setUpForMissWhenHitsIsEmpty() {
 		listFull.add(new Point(1, 3));
-		listFull.add(new Point(7, 4));
 		underTest.setHits(listHits);
 		underTest.setGuesses(listFull);
 		underTest.setGuessesFirstHalf(listHalf);

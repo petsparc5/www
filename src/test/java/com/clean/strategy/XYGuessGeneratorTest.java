@@ -1,5 +1,6 @@
 package com.clean.strategy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
@@ -19,6 +20,21 @@ public class XYGuessGeneratorTest {
 	}
 	
 	@Test
+	public void testResetGuesses() {
+		//GIVEN
+		underTest = new XYGuessGenerator(2);
+		List<Point> pointsToDelete = new ArrayList<>();
+		pointsToDelete.add(new Point(5, 3));
+		pointsToDelete.add(new Point(20, 3));
+		pointsToDelete.add(new Point(3, 16));
+		underTest.setGuesses(pointsToDelete);
+		//WHEN
+		underTest.resetGuesses();
+		//THEN
+		Assert.assertTrue(underTest.getGuesses().isEmpty());
+	}
+	
+	@Test
 	public void testGenerateOptimalGuessWithWithNoShiftAndFirstHalf(){
 		//GIVEN
 		underTest = new XYGuessGenerator(10);
@@ -34,7 +50,7 @@ public class XYGuessGeneratorTest {
 		}
 	}
 	
-	@Test
+		@Test
 	public void testGenerateOptimalGuessWithWithNoShiftAndSecondHalf(){
 		//GIVEN
 		underTest = new XYGuessGenerator(10);

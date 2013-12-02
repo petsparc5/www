@@ -18,46 +18,43 @@ public class XYGuessGenerator {
 	public void generateOptimalGuess(int shift, int oddEven) {
 		int middle = (boardSize-1) /2;
 		for (int layer = oddEven; layer < middle+3; layer = layer + 2) {
-			makeTopGuesses(layer, middle, shift);
-			if (!(layer == 0)) {
-				makeBottomGuesses(layer, middle, shift);
-			}
-			makeLeftGuesses(layer, middle, shift);
-			makeRightGuesses(layer, middle, shift);
+			makeALayerOfGuesses(layer, middle, shift);
 		}
 	}
-
-	private void makeTopGuesses(int layer, int middle, int shift) {
+	
+	private void makeALayerOfGuesses(int layer, int middle, int shift) {
 		int x, y;
-		for (int topsteps = 0; topsteps < layer+1; topsteps++) {
-			x = middle - layer + topsteps*2 + shift;
-			y = middle + layer;
-			storeGuesses(x,y);
+		for (int step = 0; step < layer; step++) {
+			makeTopGuess(layer, middle, shift, step);
+			makeRightGuess(layer, middle, shift, step);
+			makeBottomGuess(layer, middle, shift, step);
+			makeLeftGuess(layer, middle, shift, step);
 		}	
 	}
-	private void makeBottomGuesses(int layer, int middle, int shift) {
+
+	private void makeTopGuess(int layer, int middle, int shift, int step) {
+		int x, y;
+			x = middle - layer + step*2 + shift;
+			y = middle + layer;
+			storeGuesses(x,y);
+	}
+	private void makeBottomGuess(int layer, int middle, int shift, int step) {
 		int x, y;	
-		for (int bottomsteps = 0; bottomsteps < layer+1; bottomsteps++) {
-			x = middle - layer + bottomsteps*2 + shift;
+			x = middle + layer - step*2 + shift;
 			y = middle - layer;
 			storeGuesses(x,y);
-		}
 	}
-	private void makeLeftGuesses(int layer, int middle, int shift) {
+	private void makeLeftGuess(int layer, int middle, int shift, int step) {
 		int x, y;	
-		for (int leftsteps = 1; leftsteps < layer; leftsteps++) {
 			x = middle - layer + shift;
-			y = middle - layer + leftsteps*2;
+			y = middle - layer + step*2;
 			storeGuesses(x,y);
-		}
 	}
-	private void makeRightGuesses(int layer, int middle, int shift) {
+	private void makeRightGuess(int layer, int middle, int shift, int step) {
 		int x, y;	
-		for (int rightsteps = 1; rightsteps < layer; rightsteps++) {
 			x = middle + layer + shift;
-			y = middle - layer + rightsteps*2;
+			y = middle + layer - step*2;
 			storeGuesses(x,y);
-		}
 	}
 	
 	private boolean checkGuesses(int x, int y) {
@@ -74,6 +71,10 @@ public class XYGuessGenerator {
 		return guesses;
 	}
 	
+	public void setGuesses(List<Point> guesses) {
+		this.guesses = guesses;
+	}
+
 	public void resetGuesses() {
 		guesses = new ArrayList<Point>();
 	}

@@ -34,11 +34,11 @@ public class ConsolePrinter {
             stringBuilder.append("-");
         }
 		System.out.format("Table:%n%s%n", stringBuilder.toString());
-		try {
+/*		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 

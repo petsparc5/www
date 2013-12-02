@@ -169,5 +169,13 @@ public class FirePositionStrategy implements GameStrategy {
 	public List<Point> getHits() {
 		return hits;
 	}
+
+	public Point getPreviousPoint() {
+		return previousPoint;
+	}
+
+	public void setPreviousPoint(Point previousPoint) {
+		this.previousPoint = previousPoint;
+	}
 		
 }

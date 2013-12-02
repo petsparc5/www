@@ -75,21 +75,9 @@ public class FirePositionStrategyTestForGuessingSmart {
 	}
 	
 	@Test
-	public void testGuessingSmartWhenEverythingWasAlreadyHitAndHitsIsEmpty() {
+	public void testGuessingSmartWhenEverythingWasAlreadyHit() {
 		//GIVEN
-		setUpForWhenEverythingWasAlreadyHitAndHitsIsEmpty();
-		//WHEN
-		String actual = underTest.guessingsmart();
-		//THEN
-		Assert.assertEquals(1, underTest.getPeter());
-		Assert.assertEquals("fire 6 6", actual);
-		Assert.assertEquals(null, underTest.getTempPoint());
-	}
-	
-	@Test
-	public void testGuessingSmartWhenEverythingWasAlreadyHitAndHitsIsNotEmpty() {
-		//GIVEN
-		setUpForWhenEverythingWasAlreadyHitAndHitsIsNotEmpty();
+		setUpForWhenEverythingWasAlreadyHit();
 		Point point = new Point(7, 7);
 		//WHEN
 		String actual = underTest.guessingsmart();
@@ -127,14 +115,7 @@ public class FirePositionStrategyTestForGuessingSmart {
 		underTest.setGuesses(listFull);
 	}
 	
-	public void setUpForWhenEverythingWasAlreadyHitAndHitsIsEmpty() {
-		listFull.add(new Point(-1, -1));
-		listFull.add(new Point(6, 6));
-		listHits.add(new Point(1, 2));
-		underTest.setHits(listHits);
-		underTest.setGuesses(listFull);
-	}
-	public void setUpForWhenEverythingWasAlreadyHitAndHitsIsNotEmpty() {
+	public void setUpForWhenEverythingWasAlreadyHit() {
 		listFull.add(new Point(7, 7));
 		listHits.add(new Point(1, 2));
 		listHits.add(new Point(6, 7));
