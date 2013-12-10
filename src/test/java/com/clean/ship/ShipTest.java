@@ -26,8 +26,8 @@ public class ShipTest {
 		boolean actual = underTest.contains(19, 19);
 		boolean actual1 = underTest.contains(19, 20);
 		//Then
-		Assert.assertEquals(true, actual);
-		Assert.assertEquals(true, actual1);
+		Assert.assertTrue(actual);
+		Assert.assertTrue(actual1);
 	}
 	
 	@Test
@@ -37,7 +37,7 @@ public class ShipTest {
 		//When
 		boolean actual = underTest.hit(5, 5);
 		//Then
-		Assert.assertEquals(true, actual);
+		Assert.assertTrue(actual);
 	}
 	
 	@Test
@@ -47,7 +47,7 @@ public class ShipTest {
 		//When
 		boolean actual = underTest.hit(6, 6);
 		//Then
-		Assert.assertEquals(false, actual);
+		Assert.assertFalse(actual);
 	}
 	
 	@Test
@@ -59,7 +59,7 @@ public class ShipTest {
 		//When
 		boolean actual = underTest.isSunken();
 		//Then
-		Assert.assertEquals(true, actual);
+		Assert.assertTrue(actual);
 	}
 	
 	@Test
@@ -70,7 +70,7 @@ public class ShipTest {
 		//When
 		boolean actual = underTest.isSunken();
 		//Then
-		Assert.assertEquals(false, actual);
+		Assert.assertFalse(actual);
 	}
 	
 	@Test
@@ -82,7 +82,7 @@ public class ShipTest {
 		//When
 		boolean actual = underTest.equals(ship);
 		//Then
-		Assert.assertEquals(true, actual);
+		Assert.assertTrue(actual);
 	}
 	
 	@Test
@@ -95,7 +95,7 @@ public class ShipTest {
 		//When
 		boolean actual = underTest.equals(ship);
 		//Then
-		Assert.assertEquals(false, actual);
+		Assert.assertFalse(actual);
 	}
 	
 	@Test
@@ -108,7 +108,7 @@ public class ShipTest {
 		//When
 		boolean actual = underTest.equals(ship);
 		//Then
-		Assert.assertEquals(false, actual);
+		Assert.assertFalse(actual);
 	}
 	
 	@Test

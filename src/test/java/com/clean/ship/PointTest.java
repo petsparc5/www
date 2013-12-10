@@ -18,28 +18,28 @@ public class PointTest {
 	public void testEquals() {
 		Point point = new Point(3, 4);
 		boolean actual = underTest.equals(point);
-		Assert.assertEquals(true, actual);
+		Assert.assertTrue(actual);
 	}
 	
 	@Test
 	public void testEqualsOtherWay() {
 		Point point = new Point(3, 4);
 		boolean actual = point.equals(underTest);
-		Assert.assertEquals(true, actual);
+		Assert.assertTrue(actual);
 	}
 	
 	@Test
 	public void testEqualsGivenWrongPoint() {
 		Point point = new Point(1, 4);
 		boolean actual = underTest.equals(point);
-		Assert.assertEquals(false, actual);
+		Assert.assertFalse(actual);
 	}
 	
 	@Test
 	public void testEqualsGivenWrongObject() {
 		String randomString = "Peter";
 		boolean actual = underTest.equals(randomString);
-		Assert.assertEquals(false, actual);
+		Assert.assertFalse(actual);
 	}
 	
 	@Test

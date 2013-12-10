@@ -6,6 +6,7 @@ import java.util.List;
 public class ShipLocations {
 	
 	private List<Ship> shipLocations = new ArrayList<Ship>();
+	private int boardSize;
 	
 	public void addShipLocation(int x, int y, String[][] shape) {
 		Ship ship = new Ship();
@@ -30,6 +31,9 @@ public class ShipLocations {
 		for (Ship ship : shipLocations) {
 			answer |= ship.contains(x, y);
 		}
+		if (x<0 || y<0 || x>= boardSize || y>=boardSize) {
+			answer = true;
+		}
     	return answer;
     }
     
@@ -51,5 +55,9 @@ public class ShipLocations {
 			}
 		}
 		return sunkenShipChecker;
+	}
+
+	public void setBoardSize(int boardSize) {
+		this.boardSize = boardSize;
 	}
 }

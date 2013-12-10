@@ -14,6 +14,7 @@ public class ShipLocationsTest {
 	public void setUp() {
 		underTest = new ShipLocations();
 		setUpShape1();
+		underTest.setBoardSize(20);
 	}
 	
 	@Test
@@ -23,7 +24,7 @@ public class ShipLocationsTest {
 		underTest.addShipLocation(19, 19, shape);
 		boolean actual = underTest.checkPoint(19, 19);
 		//Then
-		Assert.assertEquals(true, actual);
+		Assert.assertTrue(actual);
 	}
 	
 	@Test
@@ -33,7 +34,7 @@ public class ShipLocationsTest {
 		//When
 		boolean actual = underTest.checkShip(1, 2, shape);
 		//Then
-		Assert.assertEquals(true, actual);
+		Assert.assertTrue(actual);
 	}
 	
 	@Test
@@ -42,7 +43,52 @@ public class ShipLocationsTest {
 		//When
 		boolean actual = underTest.checkShip(1, 2, shape);
 		//Then
-		Assert.assertEquals(false, actual);
+		Assert.assertFalse(actual);
+	}
+	
+	@Test
+	public void testCheckPointWithNegativeX() {
+		//Given
+		//When
+		boolean actual = underTest.checkPoint(-1, 4);
+		//Then
+		Assert.assertTrue(actual);
+	}
+	
+	@Test
+	public void testCheckPointWithNegativeY() {
+		//Given
+		//When
+		boolean actual = underTest.checkPoint(1, -4);
+		//Then
+		Assert.assertTrue(actual);
+	}
+	
+	@Test
+	public void testCheckPointWithBigX() {
+		//Given
+		//When
+		boolean actual = underTest.checkPoint(21, 4);
+		//Then
+		Assert.assertTrue(actual);
+	}
+	
+	@Test
+	public void testCheckPointWithBigY() {
+		//Given
+		//When
+		boolean actual = underTest.checkPoint(1, 24);
+		//Then
+		Assert.assertTrue(actual);
+	}
+	
+	@Test
+	public void testCheckPoint() {
+		//Given
+		//When
+		boolean actual = underTest.checkPoint(1, 4);
+		//Then
+		Assert.assertFalse(actual);
 	}
 	
 	@Test
@@ -52,7 +98,7 @@ public class ShipLocationsTest {
 		//When
 		boolean actual = underTest.hit(5, 5);
 		//Then
-		Assert.assertEquals(true, actual);
+		Assert.assertTrue(actual);
 	}
 	
 	@Test
@@ -62,7 +108,7 @@ public class ShipLocationsTest {
 		//When
 		boolean actual = underTest.hit(6, 6);
 		//Then
-		Assert.assertEquals(false, actual);
+		Assert.assertFalse(actual);
 	}
 	
 	@Test
@@ -74,7 +120,7 @@ public class ShipLocationsTest {
 		//When
 		boolean actual = underTest.checkSunken();
 		//Then
-		Assert.assertEquals(true, actual);
+		Assert.assertTrue(actual);
 	}
 	
 	@Test
@@ -85,7 +131,7 @@ public class ShipLocationsTest {
 		//When
 		boolean actual = underTest.checkSunken();
 		//Then
-		Assert.assertEquals(false, actual);
+		Assert.assertFalse(actual);
 	}
 	
 	public void setUpShape1() {

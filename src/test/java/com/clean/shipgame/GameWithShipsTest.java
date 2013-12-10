@@ -120,7 +120,7 @@ public class GameWithShipsTest {
 		boolean actual = underTest.checkIfSunken();
 		//THEN
 		EasyMock.verify(shipLocations);
-		Assert.assertEquals(false, actual);
+		Assert.assertFalse(actual);
 	}
 	
 	@Test
@@ -132,6 +132,6 @@ public class GameWithShipsTest {
 		boolean actual = underTest.checkIfSunken();
 		//THEN
 		EasyMock.verify(shipLocations);
-		Assert.assertEquals(true, actual);
+		Assert.assertTrue(actual);
 	}
 }

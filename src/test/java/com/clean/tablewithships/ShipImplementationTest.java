@@ -50,8 +50,10 @@ public class ShipImplementationTest {
 		EasyMock.replay(reader);
 		EasyMock.expect(shipLocations.checkPoint(EasyMock.anyInt(), EasyMock.anyInt())).andReturn(true).times(50);
 		EasyMock.expect(shipLocations.checkPoint(EasyMock.anyInt(), EasyMock.anyInt())).andReturn(false).times(350);
-		EasyMock.replay(shipLocations);
 		underTest.setBoardSize(20);
+		EasyMock.expectLastCall();
+		shipLocations.setBoardSize(20);
+		EasyMock.replay(shipLocations);
 		//WHEN
 		underTest.setFilename("boohoo");
 		underTest.initialisation();

@@ -33,7 +33,8 @@ public class ShipImplementation {
 		reader.setFilename(filename);
 		reader.read();
 		ships = reader.getShips();
-		numberOfShips = reader.getNumberOfShips();	
+		numberOfShips = reader.getNumberOfShips();
+		shipLocations.setBoardSize(boardSize);
 	}
 
     public void placeShips() {
@@ -42,9 +43,9 @@ public class ShipImplementation {
     		for (int indexForHowManyTimesWeNeedToPlaceAShip = 0; indexForHowManyTimesWeNeedToPlaceAShip < numberOfShips.get(index); 
     				indexForHowManyTimesWeNeedToPlaceAShip++) {
 				String[][] shipShape = ships.get(index);
-	       	 	int randomInt = randomgenerator.nextInt(boardSize-4);
-	       	 	int randomInt2 = randomgenerator.nextInt(boardSize-4);
-	       	 	if (shipLocations.checkShip(randomInt, randomInt2, shipShape)){
+	       	 	int randomInt = randomgenerator.nextInt(boardSize+3);
+	       	 	int randomInt2 = randomgenerator.nextInt(boardSize+3);
+	       	 	if (shipLocations.checkShip(randomInt-3, randomInt2-3, shipShape)){
 	       	 	indexForHowManyTimesWeNeedToPlaceAShip--;
 	       	 	} else {
 	       	 		shipLocations.addShipLocation(randomInt, randomInt2, shipShape);
