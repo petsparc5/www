@@ -32,9 +32,6 @@ public class MessageHandler {
         String outLine;
         try {
             while((inLine = in.readLine()) != null){
-            	if(inLine.contains("fire")) {
-            		System.out.format("inLine=%s %n", inLine);
-            	}
                 if(inLine.contains("fire")){
                     outLine = torpedoProtocol.processInput(inLine);
                     out.println(outLine);
