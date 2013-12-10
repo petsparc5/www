@@ -48,7 +48,7 @@ public class ShipImplementation {
 	       	 	if (shipLocations.checkShip(randomInt-3, randomInt2-3, shipShape)){
 	       	 	indexForHowManyTimesWeNeedToPlaceAShip--;
 	       	 	} else {
-	       	 		shipLocations.addShipLocation(randomInt, randomInt2, shipShape);
+	       	 		shipLocations.addShipLocation(randomInt-3, randomInt2-3, shipShape);
 	       	 }
 	    	}
 		}
