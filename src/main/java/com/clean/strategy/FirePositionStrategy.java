@@ -7,175 +7,186 @@ import com.clean.interfaces.GameStrategy;
 import com.clean.ship.Point;
 import com.clean.shipgame.Status;
 
+/**
+ * Peter's ingenious strategy to defeat the enemies.
+ * @author Peter_Takacs
+ *
+ */
 public class FirePositionStrategy implements GameStrategy {
-		
-	private List<Point> guesses;
-	private XYGuessGenerator generator;
-	private List<Point> hits = new ArrayList<>();
-	private List<Point> guessesFirstHalf = new ArrayList<>();
-	private int peter = 0;
-	private Point tempPoint;
-	private Point previousPoint;
-	
-	public void initialise() {
-		generator.generateOptimalGuess(0, 0);
-		generator.generateOptimalGuess(0, 1);
-		guessesFirstHalf = generator.getGuesses();
-		generator.resetGuesses();
-		generator.generateOptimalGuess(0, 0);
-		generator.generateOptimalGuess(0, 1);
-		generator.generateOptimalGuess(1, 0);
-		generator.generateOptimalGuess(1, 1);
-		guesses = generator.getGuesses();
-	}
 
-	@Override
-	public String getTarget(Status input) {
-		String answer;
-		switch (input) {
-		case SUNK:
-			for(int i = 0; i < hits.size(); i++){
-				if (!(guessesFirstHalf.contains(hits.get(i)))){
-					hits.remove(i);
-				}
-			}
-			answer = getTarget(Status.MISS);
-			break;
-		case HIT:
-			if (tempPoint == null) {
-				hits.add(previousPoint);
-			} else {
-				hits.add(tempPoint);
-			}
-			answer = guessingsmart();
-			break;
-		case MISS:
-			answer = handlingMissCase();
-			break;
-		default:
-			answer = "OOPS! BAD CODE ON MY PART! (But, please blame Csabi!)";
-			break;
-		}
-		return answer;
-	}
+    private List<Point> guesses;
+    private XYGuessGenerator generator;
+    private List<Point> hits = new ArrayList<>();
+    private List<Point> guessesFirstHalf = new ArrayList<>();
+    private int peter;
+    private Point tempPoint;
+    private Point previousPoint;
 
-	private String handlingMissCase() {
-		String answer;
-		if (!(hits.isEmpty())){
-			answer = guessingsmart();			
-		} else {
-			previousPoint = guesses.get(0);
-			answer = converter(guesses.get(0));
-			guesses.remove(0);
-			peter++;
-			tempPoint = null;
-		}
-		return answer;
-	}
+    @Override
+    public void initialise() {
+        generator.generateOptimalGuess(0, 0);
+        generator.generateOptimalGuess(0, 1);
+        guessesFirstHalf = generator.getGuesses();
+        generator.resetGuesses();
+        generator.generateOptimalGuess(0, 0);
+        generator.generateOptimalGuess(0, 1);
+        generator.generateOptimalGuess(1, 0);
+        generator.generateOptimalGuess(1, 1);
+        guesses = generator.getGuesses();
+    }
 
-	public String guessingsmart() {
-		Point point = hits.get(0);
-		String answer;
-		tempPoint = shiftPoint(point, Direction.UP);
-		if (guesses.remove((tempPoint))){
-			answer = converter(tempPoint);
-			peter++;
-		} else {
-			tempPoint = shiftPoint(point, Direction.DOWN);
-			if (guesses.remove((tempPoint))){
-				answer = converter(tempPoint);
-				peter++;
-			} else {
-				tempPoint = shiftPoint(point, Direction.LEFT);
-				if (guesses.remove((tempPoint))){
-					answer = converter(tempPoint);
-					peter++;
-				} else {
-					tempPoint = shiftPoint(point, Direction.RIGHT);
-					if (guesses.remove((tempPoint))){
-						answer = converter(tempPoint);
-						peter++;
-					} else {
-						hits.remove(0);
-						answer = getTarget(Status.MISS);
-					}
-				}
-			}
-		}
-		return answer;
-	}
+    @Override
+    public String getTarget(Status input) {
+        String answer;
+        switch (input) {
+        case SUNK:
+            for (int i = 0; i < hits.size(); i++) {
+                if (!guessesFirstHalf.contains(hits.get(i))) {
+                    hits.remove(i);
+                }
+            }
+            answer = getTarget(Status.MISS);
+            break;
+        case HIT:
+            if (tempPoint == null) {
+                hits.add(previousPoint);
+            } else {
+                hits.add(tempPoint);
+            }
+            answer = guessingsmart();
+            break;
+        case MISS:
+            answer = handlingMissCase();
+            break;
+        default:
+            answer = "OOPS! BAD CODE ON MY PART! (But, please blame Csabi!)";
+            break;
+        }
+        return answer;
+    }
 
-	private Point shiftPoint (Point point, Direction direction){
-		Point newPoint;
-		switch (direction) {
-		case UP:
-			newPoint = new Point(point.getX(), point.getY()+1);
-			break;
-		case DOWN:
-			newPoint = new Point(point.getX(), point.getY()-1);
-			break;
-		case LEFT:
-			newPoint = new Point(point.getX()-1, point.getY());
-			break;
-		case RIGHT:
-			newPoint = new Point(point.getX()+1, point.getY());
-			break;
-		default:
-			newPoint = point;
-		}
-		return newPoint;
-	}
-	
-	private String converter(Point point) {
-		return "fire " + String.valueOf(point.getX()) + " " +String.valueOf(point.getY());
-	}
-	
-	@Override
-	public int getPeter() {
-		return peter;
-	}
+    private String handlingMissCase() {
+        String answer;
+        if (!hits.isEmpty()) {
+            answer = guessingsmart();
+        } else {
+            previousPoint = guesses.get(0);
+            answer = converter(guesses.get(0));
+            guesses.remove(0);
+            peter++;
+            tempPoint = null;
+        }
+        return answer;
+    }
 
-	public void setGenerator(XYGuessGenerator generator) {
-		this.generator = generator;
-	}
+    /**
+     * Calculates the next move when received hit from previous fires.
+     * @return the next target.
+     */
+    public String guessingsmart() {
+        Point point = hits.get(0);
+        String answer;
+        tempPoint = shiftPoint(point, Direction.UP);
+        if (guesses.remove(tempPoint)) {
+            answer = converter(tempPoint);
+            peter++;
+        } else {
+            tempPoint = shiftPoint(point, Direction.DOWN);
+            if (guesses.remove(tempPoint)) {
+                answer = converter(tempPoint);
+                peter++;
+            } else {
+                tempPoint = shiftPoint(point, Direction.LEFT);
+                if (guesses.remove(tempPoint)) {
+                    answer = converter(tempPoint);
+                    peter++;
+                } else {
+                    tempPoint = shiftPoint(point, Direction.RIGHT);
+                    if (guesses.remove(tempPoint)) {
+                        answer = converter(tempPoint);
+                        peter++;
+                    } else {
+                        hits.remove(0);
+                        answer = getTarget(Status.MISS);
+                    }
+                }
+            }
+        }
+        return answer;
+    }
 
-	public List<Point> getGuesses() {
-		return guesses;
-	}
+    private Point shiftPoint(Point point, Direction direction) {
+        Point newPoint;
+        switch (direction) {
+        case UP:
+            newPoint = new Point(point.getX(), point.getY() + 1);
+            break;
+        case DOWN:
+            newPoint = new Point(point.getX(), point.getY() - 1);
+            break;
+        case LEFT:
+            newPoint = new Point(point.getX() - 1, point.getY());
+            break;
+        case RIGHT:
+            newPoint = new Point(point.getX() + 1, point.getY());
+            break;
+        default:
+            newPoint = point;
+        }
+        return newPoint;
+    }
 
-	public List<Point> getGuessesFirstHalf() {
-		return guessesFirstHalf;
-	}
+    private String converter(Point point) {
+        return "fire " + String.valueOf(point.getX()) + " " + String.valueOf(point.getY());
+    }
 
-	public void setGuesses(List<Point> guesses) {
-		this.guesses = guesses;
-	}
+    @Override
+    public int getPeter() {
+        return peter;
+    }
 
-	public void setGuessesFirstHalf(List<Point> guessesFirstHalf) {
-		this.guessesFirstHalf = guessesFirstHalf;
-	}
-	public Point getTempPoint() {
-		return tempPoint;
-	}
+    public void setGenerator(XYGuessGenerator generator) {
+        this.generator = generator;
+    }
 
-	public void setHits(List<Point> hits) {
-		this.hits = hits;
-	}
+    public List<Point> getGuesses() {
+        return guesses;
+    }
 
-	public void setTempPoint(Point tempPoint) {
-		this.tempPoint = tempPoint;
-	}
+    public List<Point> getGuessesFirstHalf() {
+        return guessesFirstHalf;
+    }
 
-	public List<Point> getHits() {
-		return hits;
-	}
+    public void setGuesses(List<Point> guesses) {
+        this.guesses = guesses;
+    }
 
-	public Point getPreviousPoint() {
-		return previousPoint;
-	}
+    public void setGuessesFirstHalf(List<Point> guessesFirstHalf) {
+        this.guessesFirstHalf = guessesFirstHalf;
+    }
 
-	public void setPreviousPoint(Point previousPoint) {
-		this.previousPoint = previousPoint;
-	}
-		
+    public Point getTempPoint() {
+        return tempPoint;
+    }
+
+    public void setHits(List<Point> hits) {
+        this.hits = hits;
+    }
+
+    public void setTempPoint(Point tempPoint) {
+        this.tempPoint = tempPoint;
+    }
+
+    public List<Point> getHits() {
+        return hits;
+    }
+
+    public Point getPreviousPoint() {
+        return previousPoint;
+    }
+
+    public void setPreviousPoint(Point previousPoint) {
+        this.previousPoint = previousPoint;
+    }
+
 }

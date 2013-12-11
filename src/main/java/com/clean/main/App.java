@@ -9,15 +9,21 @@ import com.clean.strategy.FirePositionStrategy;
 import com.clean.strategy.XYGuessGenerator;
 import com.clean.tablewithships.ShipImplementation;
 
-
-
-public class App 
-{
-    public static void main( String[] args ) {
-    	if (args.length != 3) {
-    		throw new IllegalArgumentException("You need to specify a file, port or host:port and boardsize");
-    	}
-    	ShipFileReader shipFileReader = new ShipFileReader();
+/**
+ * The main class.
+ * @author Peter_Takacs
+ *
+ */
+public class App {
+    /**
+     * Main method of the main class.
+     * @param args file, port or host:port and boardsize.
+     */
+    public static void main(String[] args) {
+        if (args.length < 2) {
+            throw new IllegalArgumentException("You need to specify a file, port or host:port and boardsize");
+        }
+        ShipFileReader shipFileReader = new ShipFileReader();
         ShipLocations shipLocations = new ShipLocations();
         ShipImplementation impl = new ShipImplementation();
         GameWithShips game = new GameWithShips();
@@ -25,7 +31,7 @@ public class App
         game.setFilename(args[0]);
         game.setShipFileReader(shipFileReader);
         game.setShipLocations(shipLocations);
-    	if(args[1].contains(":")){
+        if (args[1].contains(":")) {
             TorpedoClient torpedoClient = new TorpedoClient(args[1]);
             game.setBoardSize(Integer.parseInt(args[2]));
             FirePositionStrategy gameStrategy = new FirePositionStrategy();
@@ -33,10 +39,10 @@ public class App
             gameStrategy.setGenerator(generator);
             gameStrategy.initialise();
             torpedoClient.initClient(game, gameStrategy, args[2]);
-    	} else {
+        } else {
             TorpedoServer torpedoServer = new TorpedoServer(args[1]);
             torpedoServer.initServer(game);
 
-    	}
+        }
     }
 }

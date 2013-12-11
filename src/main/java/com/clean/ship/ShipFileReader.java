@@ -7,67 +7,79 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * Reads the file with the ships.
+ * @author Peter_Takacs
+ *
+ */
 public class ShipFileReader {
-	
-	private List<String[][]> ships = new ArrayList<String[][]>();
-	private List<Integer> numberOfShips = new ArrayList<Integer>();
-	
-	private String filename;
-	
-	private String[] convert(String string) {
-		String[] answer = new String[4];
-		answer[0] = string.substring(0, 1);
-		answer[1] = string.substring(1, 2);
-		answer[2] = string.substring(2, 3);
-		answer[3] = string.substring(3, 4);
-		return answer;
-	}
 
-	public void read() {
-		BufferedReader reader = null;
-		try {
-			reader = new BufferedReader(new FileReader(new File(filename)));
-			System.out.format("filename=%s %n", filename);
-		} catch (IOException e) {
-			System.out.println("Could not locate your file");
-		}
-		
-		String line = "";
-		int checkForNewShip = 0;
-		String[][] shipShape = new String[4][4];
-		
-		try {
-			numberOfShips.add(Integer.valueOf(reader.readLine()));
-			
-			while ((line = reader.readLine()) != null){
-				if (checkForNewShip == 4){
-					numberOfShips.add(Integer.valueOf(line));
-					checkForNewShip = 0;
-					ships.add(shipShape);
-					shipShape = new String[4][4];
-				}
-				else {
-					shipShape[checkForNewShip] = convert(line);
-					checkForNewShip++;
-				}
-			}
-			ships.add(shipShape);
-		} catch (IOException e) {
-			System.out.println("Could not read from the file");
-		}
-	}
+    private final Logger logger = LoggerFactory.getLogger(ShipFileReader.class);
+    private List<String[][]> ships = new ArrayList<String[][]>();
+    private List<Integer> numberOfShips = new ArrayList<Integer>();
 
-	public List<String[][]> getShips() {
-		return ships;
-	}
+    private String filename;
 
-	public List<Integer> getNumberOfShips() {
-		return numberOfShips;
-	}
+    private String[] convert(String string, int length) {
+        String[] answer = new String[length];
+        for (int i = 0; i < length; i++) {
+            answer[i] = string.substring(i, i + 1);
+        }
+        return answer;
+    }
 
-	public void setFilename(String filename) {
-		this.filename = filename;
-	}
+    /**
+     * Reads the content of the file that contains the ships.
+     */
+    public void read() {
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(new File(filename)));
+            logger.warn("filename=" + filename);
+        } catch (IOException e) {
+            logger.error("Could not locate your file");
+        }
 
+        String line = "";
+        int checkForNewShip = 1;
+        String[][] shipShape;
+
+        try {
+            numberOfShips.add(Integer.valueOf(reader.readLine()));
+            String firstline = reader.readLine();
+            int length = firstline.length();
+            shipShape = new String[length][length];
+            shipShape[0] = convert(firstline, length);
+            while ((line = reader.readLine()) != null) {
+                if (checkForNewShip == length) {
+                    numberOfShips.add(Integer.valueOf(line));
+                    checkForNewShip = 0;
+                    ships.add(shipShape);
+                    shipShape = new String[length][length];
+                } else {
+                    shipShape[checkForNewShip] = convert(line, length);
+                    checkForNewShip++;
+                }
+            }
+            ships.add(shipShape);
+        } catch (IOException e) {
+            logger.error("Could not read from the file");
+        }
+    }
+
+    public List<String[][]> getShips() {
+        return ships;
+    }
+
+    public List<Integer> getNumberOfShips() {
+        return numberOfShips;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
 
 }
